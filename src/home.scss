@@ -1,0 +1,132 @@
+// Define reusable variables
+$text-color: #333;
+$bg-color: #fff;
+$primary-color: #007bff;
+
+// General styles for the Home component
+#home {
+    background-color: $bg-color;
+    color: $text-color;
+    position: relative;
+
+    .home-content {
+        position: relative;
+        width: 100%;
+        height: 100vh; // Full viewport height
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+
+        .home-bg-image {
+            width: auto;
+            height: 100%;
+            //display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            border-radius: 15px;
+            z-index: 0; // Ensure the image is behind the text
+        }
+
+        .home-heading {
+            z-index: 1; // Ensure the text is on top of the image
+            color: #fff; // Set text color to white for better contrast
+
+            .heading1 {
+                font-size: 3rem;
+                font-weight: 1000;
+                margin-bottom: 10px;
+            }
+
+            .heading2 {
+                font-size: 2.5rem;
+                //margin-bottom: 20px;
+                line-height: 0;
+            }
+        }
+    }
+}
+
+#info {
+    background-color: $bg-color;
+    color: $text-color;
+    padding: 20px;
+    text-align: left;
+
+    .info-content {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center; // Center the entire container
+        margin: 0 10px;
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+        }
+
+        .info-text, .info-image {
+            display: flex;
+            flex-direction: column;
+            align-items: center; // Center content within each column
+            justify-content: center; // Center content vertically
+            flex: 1;
+        }
+
+        .info-text {
+            h2 {
+                margin-bottom: 20px;
+            }
+            p {
+                line-height: 1.6;
+                text-align: center; // Center text within the column
+            }
+            strong {
+                color: $primary-color;
+            }
+        }
+
+        .info-image {
+            img {
+                width: 100%;
+                height: auto;
+                display: block;
+                border-radius: 15px;
+            }
+        }
+    }
+}
+
+#statement-of-faith {
+    background-color: $bg-color;
+    color: $text-color;
+    padding: 20px;
+    text-align: center;
+
+    h2 {
+        margin-bottom: 20px;
+    }
+
+    p {
+        line-height: 1.6;
+        margin-bottom: 15px;
+    }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+    #home,
+    #info {
+        padding: 10px;
+    }
+
+    #info {
+        .info-content {
+            .info-text,
+            .info-image {
+                width: 100%;
+            }
+        }
+    }
+}

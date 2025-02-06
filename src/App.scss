@@ -1,0 +1,21 @@
+// Define reusable variables
+$text-color: #333;
+$bg-color: #f4f4f4;
+
+@media (pointer: fine) {
+  ::-webkit-scrollbar {
+    height: 14px;
+    width: 14px;
+    margin: 0 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #aeaeae;
+    -webkit-border-radius: 1ex;
+    border: 3.5px solid white;
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: #000;
+  }
+}
