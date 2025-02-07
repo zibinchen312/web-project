@@ -2,6 +2,7 @@
 $text-color: #333;
 $bg-color: #fff;
 $primary-color: #007bff;
+$shadow-color: #ccc;
 
 // General styles for the Home component
 #home {
@@ -19,16 +20,15 @@ $primary-color: #007bff;
         text-align: center;
 
         .home-bg-image {
-            width: auto;
+            width: 100%;
             height: 100%;
-            //display: block;
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            top: 0;
+            left: 0;
             object-fit: cover;
             border-radius: 15px;
             z-index: 0; // Ensure the image is behind the text
+            box-shadow: 0 0 10px 5px $shadow-color;
         }
 
         .home-heading {
@@ -43,8 +43,7 @@ $primary-color: #007bff;
 
             .heading2 {
                 font-size: 2.5rem;
-                //margin-bottom: 20px;
-                line-height: 0;
+                line-height: 1.2;
             }
         }
     }
@@ -60,7 +59,6 @@ $primary-color: #007bff;
         display: flex;
         flex-wrap: wrap;
         justify-content: center; // Center the entire container
-        margin: 0 10px;
 
         @media (max-width: 768px) {
             flex-direction: column;
@@ -79,11 +77,15 @@ $primary-color: #007bff;
                 margin-bottom: 20px;
             }
             p {
+                margin: 0;
                 line-height: 1.6;
                 text-align: center; // Center text within the column
             }
             strong {
                 color: $primary-color;
+            }
+            .info-button {
+                margin-top: 20px;
             }
         }
 

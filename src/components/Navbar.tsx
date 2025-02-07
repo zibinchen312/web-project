@@ -6,14 +6,7 @@ import './navbar.scss';
 const Navbar: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const [screenWidth, setScreenWidth] = useState(window.innerWidth);
     const [menuOpen, setMenuOpen] = useState(false);
-
-    useEffect(() => {
-        const handleResize = () => setScreenWidth(window.innerWidth);
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
 
     const handleLinkClick = (path: string) => {
         navigate(path);
@@ -28,35 +21,39 @@ const Navbar: React.FC = () => {
     };
 
     return (
-        <nav className='topnav' id='nav-main'>
-            <div className='nav-inner'>
-                {/* Hamburger menu for small screens */}
-                {screenWidth <= 800 && (
-                    <div className='hamburger'>
-                        <button className='bars-button' onClick={toggleMenu}>
-                            <i className='fa-solid fa-bars'></i>
-                        </button>
-                    </div>
-                )}
-
-                {/* Church Name on the Right */}
-                <div className='nav-name' onClick={() => navigate("/")}>
-                    <h1 className='name'>Church of Chicagoans</h1>
-                </div>
-
-                {/* Spacer for larger screens */}
-                {screenWidth > 800 && <div className='grow' />}
-
-                {/* Navigation Links */}
-                <ul
-                    className={`links ${menuOpen ? "menu-open" : ""}`}
-                    id='nav-menu-open'
+        <nav className="navbar navbar-expand-lg navbar-light bg-light" id="nav-main">
+            <div className="container-fluid">
+                <a className="navbar-brand" href="#" onClick={() => navigate("/")}>
+                    芝加哥教会
+                </a>
+                <button
+                    className="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav"
+                    aria-controls="navbarNav"
+                    aria-expanded={menuOpen}
+                    aria-label="Toggle navigation"
+                    onClick={toggleMenu}
                 >
-                    <li className={isActive("/")} onClick={() => handleLinkClick("/")}>Home</li>
-                    <li className={isActive("/about")} onClick={() => handleLinkClick("/about")}>About</li>
-                    <li className={isActive("/locations")} onClick={() => handleLinkClick("/locations")}>Locations</li>
-                    <li className={isActive("/contact")} onClick={() => handleLinkClick("/contact")}>Contact</li>
-                </ul>
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+                <div className={`collapse navbar-collapse ${menuOpen ? 'show' : ''}`}>
+                    <ul className="navbar-nav ms-auto">
+                        <li className={`nav-item ${isActive("/")}`}>
+                            <a className="nav-link" onClick={() => handleLinkClick("/")}>首页</a>
+                        </li>
+                        <li className={`nav-item ${isActive("/about")}`}>
+                            <a className="nav-link" onClick={() => handleLinkClick("/about")}>活动</a>
+                        </li>
+                        <li className={`nav-item ${isActive("/locations")}`}>
+                            <a className="nav-link" onClick={() => handleLinkClick("/locations")}>关于我们</a>
+                        </li>
+                        <li className={`nav-item ${isActive("/contact")}`}>
+                            <a className="nav-link" onClick={() => handleLinkClick("/contact")}>联系我们</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
     );

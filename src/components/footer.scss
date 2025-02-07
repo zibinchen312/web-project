@@ -7,8 +7,7 @@ $primary-color: #007bff;
     background-color: $bg-color;
     color: $text-color;
     width: 100%;
-    display: flex;
-    justify-content: center;
+    box-sizing: border-box;
 
     .footer-content {
         display: flex;
@@ -16,11 +15,32 @@ $primary-color: #007bff;
         align-items: center;
         justify-content: center;
         text-align: center;
-        line-height: 0.25;
-        left: 50%;
 
-        .footer-title {
-            font-size: 1.5rem;
+        .footer-info {
+
+            .footer-title {
+                font-size: 1.5rem;
+                margin: 10px 0;
+            }
+
+            p {
+                margin: 5px 0;
+                line-height: 1.6;
+            }
         }
+
+        .footer-bottom {
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+    }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+    .footer {
+        padding: 10px;
     }
 }

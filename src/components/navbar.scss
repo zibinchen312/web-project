@@ -1,57 +1,51 @@
-// Define reusable variables
-$text-color: #333;
-$bg-color: #fff;
-
-.topnav {
-    background-color: $bg-color;
-    color: $text-color;
-    //padding: 10px 20px; /* Adjust padding as needed */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.navbar {
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 1000;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    box-sizing: border-box; /* Makes the element scale with screen size */
+    box-sizing: border-box;
     overflow: hidden;
+    background-color: #f8f9fa; /* Adjust background color as needed */
+    padding: 10px 20px; /* Adjust padding as needed */
 
-    .nav-inner {
+    .container-fluid {
         display: flex;
         justify-content: space-between;
-        align-items: center;
         width: 100%;
-        padding: 0 20px; /* Add padding to the inner container */
     }
 
-    .nav-logo {
+    .navbar-brand {
         cursor: pointer;
-        img {
-            height: 40px;
-        }
+        font-size: 24px;
+        font-weight: bold;
     }
 
-    .links {
-        list-style: none;
-        padding: 0;
-        margin: 0;
+    .navbar-toggler {
+        border: none;
+        background: none;
+        font-size: 24px;
+    }
+    
+    .navbar-nav {
         display: flex;
         align-items: center;
 
-        li {
-            margin: 0 10px; /* Add margin to list items */
-            cursor: pointer;
-            color: $text-color;
-            font-size: 16px;
-            transition: color 0.3s ease;
+        .nav-item {
+            margin-left: 20px;
 
-            &:hover {
-                color: #007bff;
+            .nav-link {
+                color: #000;
+                text-decoration: none;
+
+                &:hover {
+                    color: #007bff;
+                }
             }
 
-            &.active {
-                color: #007bff; // Active link color
+            &.active .nav-link {
+                font-weight: bold;
+                color: #007bff;
             }
         }
     }
