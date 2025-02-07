@@ -6,18 +6,18 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
     overflow: hidden;
-    background-color: #f8f9fa; /* Adjust background color as needed */
+    background-color: #fff; /* Adjust background color as needed */
     padding: 10px 20px; /* Adjust padding as needed */
 
     .container-fluid {
         display: flex;
         justify-content: space-between;
-        width: 100%;
+        max-width: 1280px;
     }
 
     .navbar-brand {
         cursor: pointer;
-        font-size: 24px;
+        font-size: 2rem;
         font-weight: bold;
     }
 
@@ -30,6 +30,10 @@
     .navbar-nav {
         display: flex;
         align-items: center;
+
+        li {
+            font-size: 1.25rem;
+        }
 
         .nav-item {
             margin-left: 20px;

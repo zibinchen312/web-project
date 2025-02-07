@@ -5,7 +5,7 @@
     "lib": ["dom", "es6", "dom.iterable", "scripthost"],
     "allowJs": true,
     "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": ".",
     "strict": true,
     "noImplicitAny": true,
     "moduleResolution": "node",
@@ -15,11 +15,12 @@
     "noEmitOnError": true,
     "jsx": "react",
     "types": ["node", "jest", "@testing-library/jest-dom", "@testing-library/react", "react", "react-dom", "@types/react-router-dom"],
+    "typeRoots": ["./node_modules/@types", "./path/to/types", "./src/types"],
     "baseUrl": "./",
     "paths": {
       "@testing-library/react": ["node_modules/@testing-library/react"]
     },
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "api/**/*"],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }

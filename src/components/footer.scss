@@ -30,10 +30,16 @@ $primary-color: #007bff;
         }
 
         .footer-bottom {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             border-top: 1px solid #ddd;
-            padding-top: 10px;
             width: 100%;
             box-sizing: border-box;
+
+            p {
+                margin: 0;
+            }
         }
     }
 }

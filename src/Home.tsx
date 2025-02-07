@@ -1,12 +1,27 @@
 // Import from React Library //
-import React, { JSX, useEffect } from "react";
+import React, { JSX, useEffect, useState } from "react";
 
 // Import Styles //
 import "./home.scss";
 
 // Import Images //
-import bgimage from "./images/homebg1.jpg";
-import ssimage from "./images/sundayservice.jpg";
+import bgimage from "./images/homebg1.png";
+import ssimage from "./images/sundayservice.png";
+
+// HTML for the Background Image Section //
+const HomeImage: React.FC = () => {
+    return (
+        <section id="home" className="container">
+            <div className="home-content">
+                <img src={bgimage} alt="Church Meeting" className="home-bg-image img-fluid"/>
+                <div className="home-heading">
+                    <h1 className="heading1">认识基督</h1>
+                    <h1 className="heading2">享受祂的丰富</h1>
+                </div>
+            </div>
+        </section>
+    );
+}
 
 // HTML for the Info Section //
 const InfoSection: React.FC = () => {
@@ -17,7 +32,7 @@ const InfoSection: React.FC = () => {
                     <img src={ssimage} alt="Sunday Service" className="img-fluid" />
                 </div>
                 <div className="info-text col-md-6">
-                    <h2>主日聚会</h2>
+                    <h2 className="fw-bolder">主日聚会</h2>
                     <p>
                         每周日下午四点半，欢迎你来参加我们的主日聚会！
                     </p>
@@ -39,10 +54,115 @@ const InfoSection: React.FC = () => {
 const FaithStatement: React.FC = () => {
     return (
         <section id="statement-of-faith" className="container py-5">
-            <h2 className="text-center mb-4">信仰宣言</h2>
-            <p className="text-center">
-                我们相信圣经是上帝所默示的圣言，是信仰和行为的最高权威。
+            <h2 className="text-center mb-4 fw-bolder">信仰宣言</h2>
+            <p className="description text-start">
+                圣经是我们的信仰宣言。我们的盼望是进入圣经向我们启示的一切，使我们明白神对世界、对教会以及对我们个人基督徒生活的旨意。
             </p>
+            <p className="description text-start">
+                我们确实相信正统基督教信仰的基本要点：神是三一的—父、子、圣灵；神的儿子自永远与父同在，并由童女所生，成为肉身，成为人—耶稣基督。祂过了无罪的生活，为了我们的救赎死在十字架上，并在第三日从死里复活，且如今在神的右边，等候祂再来，在地上建立祂的国度。
+            </p>
+            <p className="description text-start">
+                这些是信仰的基本要点，是所有真正的基督徒必须持守的基本信仰。然而，若我们超越这些要点，制定一套关于我们特定信念的信条，我们可能会无意间、不必要地与其他信徒分隔开来。
+            </p>
+            <p className="description text-start">
+                当我们一同站立在基督里，圣灵将引导我们进入一切的真理（约翰福音16:13）。当我们在基督里成长，我们终将清楚地明白自己当持守的信仰：
+            </p>
+            <p className="description text-start">
+                “直等到我们众人在真道上同归于一，认识神的儿子，得以长大成人，满有基督长成的身量，使我们不再作小孩子，中了人的诡计和欺骗的法术，被一切异教之风摇动，飘来飘去，就随从各样的异端；惟用爱心说诚实话，凡事长进，连于元首基督。” ——以弗所书 4:13-15
+            </p>
+        </section>
+    );
+}
+
+const ContactForm: React.FC = () => {
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        message: "",
+    });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        try {
+            const response = await fetch("https://web-project-qx3m5zhxe-zibin-chens-projects.vercel.app/api/send-message", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            });
+    
+            const result = await response.json();
+            if (response.ok) {
+                alert("您的消息已发送，我们会尽快回复您！");
+                setFormData({ name: "", email: "", message: "" });
+            } else {
+                alert("发送失败: " + result.error);
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("发送失败，请稍后再试！");
+        }
+    };
+
+    return (
+        <section id="contact-form" className="container py-5">
+            <h2 className="text-center mb-4 fw-bolder">联系我们</h2>
+            <p className="text-center">如果您有任何问题或需要更多信息，请填写以下表格。</p>
+            <div className="row justify-content-center">
+                <div className="col-md-8">
+                    <form onSubmit={handleSubmit}>
+                        <div className="mb-3">
+                            <label htmlFor="name" className="form-label">姓名</label>
+                            <input 
+                                type="text" 
+                                className="form-control" 
+                                id="name" 
+                                name="name"
+                                value={formData.name}
+                                onChange={handleChange} 
+                                required 
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="email" className="form-label">电子邮件</label>
+                            <input 
+                                type="email" 
+                                className="form-control" 
+                                id="email" 
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange} 
+                                required 
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="message" className="form-label">消息</label>
+                            <textarea 
+                                className="form-control" 
+                                id="message" 
+                                name="message"
+                                rows={4}
+                                value={formData.message}
+                                onChange={handleChange} 
+                                required 
+                            ></textarea>
+                        </div>
+                        <div className="text-center">
+                            <button type="submit" className="btn btn-primary">发送消息</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
         </section>
     );
 }
@@ -64,19 +184,13 @@ export default function Home(): JSX.Element {
 
     return (
     <>
-        <section id="home" className="container">
-            <div className="home-content">
-                <img src={bgimage} alt="Church Meeting" className="home-bg-image img-fluid"/>
-                <div className="home-heading">
-                    <h1 className="heading1">认识基督</h1>
-                    <h1 className="heading2">享受祂的丰富</h1>
-                </div>
-            </div>
-        </section>
+        <HomeImage />
 
         <InfoSection />
 
         <FaithStatement />
+
+        <ContactForm />
     </>
 );
 }

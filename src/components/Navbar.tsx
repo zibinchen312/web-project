@@ -21,10 +21,10 @@ const Navbar: React.FC = () => {
     };
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-light bg-light" id="nav-main">
+        <nav className="navbar navbar-expand-lg navbar-light" id="nav-main">
             <div className="container-fluid">
-                <a className="navbar-brand" href="#" onClick={() => navigate("/")}>
-                    芝加哥教会
+                <a className="navbar-brand" onClick={() => navigate("/")}>
+                    芝加哥人教会
                 </a>
                 <button
                     className="navbar-toggler"
