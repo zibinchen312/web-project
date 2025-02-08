@@ -91,8 +91,12 @@ const ContactForm: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
+        const apiUrl = process.env.NODE_ENV === "production"
+            ? "https://web-project-qx3m5zhxe-zibin-chens-projects.vercel.app/api/send-message"
+            : "http://localhost:3000/api/send-message";
+
         try {
-            const response = await fetch("https://web-project-qx3m5zhxe-zibin-chens-projects.vercel.app/api/send-message", {
+            const response = await fetch(apiUrl, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

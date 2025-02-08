@@ -1,6 +1,4 @@
 declare module 'nodemailer' {
-    import { Transporter, SendMailOptions } from 'nodemailer';
-
     export function createTransport(options: any): Transporter;
 
     export interface Transporter {

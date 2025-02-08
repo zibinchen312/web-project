@@ -21,6 +21,6 @@
       "@testing-library/react": ["node_modules/@testing-library/react"]
     },
   },
-  "include": ["src/**/*", "api/**/*"],
+  "include": ["src/**/*", "api/**/*", "../backend/api/send-message.ts"],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }

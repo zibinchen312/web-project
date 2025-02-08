@@ -2,7 +2,9 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
+/node_modules
 /frontend/node_modules
+/backend/node_modules
 /.pnp
 .pnp.js
 
@@ -11,6 +13,8 @@
 
 # production
 /build
+/frontend/build
+/backend/dist
 
 # misc
 .DS_Store
@@ -25,3 +29,22 @@ yarn-debug.log*
 yarn-error.log*
 
 .vercel
+
+# IDEs and editors
+/.idea
+/.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Logs
+logs
+*.log
+
+# OS generated files
+Thumbs.db
+
+# Environment variables
+.env.*.local
