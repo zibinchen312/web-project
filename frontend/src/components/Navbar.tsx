@@ -1,4 +1,4 @@
-import React, { useState, useEffect }  from 'react';
+import React, { useState }  from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import './navbar.scss';
@@ -23,9 +23,9 @@ const Navbar: React.FC = () => {
     return (
         <nav className="navbar navbar-expand-lg navbar-light" id="nav-main">
             <div className="container-fluid">
-                <a className="navbar-brand" onClick={() => navigate("/")}>
+                <div className="navbar-brand" onClick={() => navigate("/")}>
                     芝加哥人教会
-                </a>
+                </div>
                 <button
                     className="navbar-toggler"
                     type="button"
@@ -41,16 +41,16 @@ const Navbar: React.FC = () => {
                 <div className={`collapse navbar-collapse ${menuOpen ? 'show' : ''}`}>
                     <ul className="navbar-nav ms-auto">
                         <li className={`nav-item ${isActive("/")}`}>
-                            <a className="nav-link" onClick={() => handleLinkClick("/")}>首页</a>
+                            <button className="nav-link" onClick={() => handleLinkClick("/")}>首页</button>
                         </li>
                         <li className={`nav-item ${isActive("/about")}`}>
-                            <a className="nav-link" onClick={() => handleLinkClick("/about")}>活动</a>
+                            <button className="nav-link" onClick={() => handleLinkClick("/about")}>活动</button>
                         </li>
                         <li className={`nav-item ${isActive("/locations")}`}>
-                            <a className="nav-link" onClick={() => handleLinkClick("/locations")}>关于我们</a>
+                            <button className="nav-link" onClick={() => handleLinkClick("/locations")}>关于我们</button>
                         </li>
                         <li className={`nav-item ${isActive("/contact")}`}>
-                            <a className="nav-link" onClick={() => handleLinkClick("/contact")}>联系我们</a>
+                            <button className="nav-link" onClick={() => handleLinkClick("/contact")}>联系我们</button>
                         </li>
                     </ul>
                 </div>
