@@ -1,29 +1,92 @@
-import express, { Application, Request, Response } from 'express';
-import bodyParser from 'body-parser';
+import 'dotenv/config';
+import express from 'express';
 import cors from 'cors';
-import path from 'path';
-import sendMessageHandler from './send-message';
+import bodyParser from 'body-parser';
+import { createClient } from '@supabase/supabase-js';
+//import userRoutes from './routes/userRouts';
+import messagesRoutes from './routes/messagesRoute';
 
-const app: Application = express();
-const PORT: number = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
+const socket = require('socket.io');
+
+declare global {
+    var onlineUsers: any;
+    var chatSocket: any;
+}
+
+const app = express();
+require("dotenv").config();
 
 // Middleware
-app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({
+    origin: [
+        'http://localhost:3000',
+        'https://web-project-kappa-sepia.vercel.app',
+        'https://web-project-frontend-zibin-chens-projects.vercel.app',
+        'https://web-project-frontend-zibinchen312-zibin-chens-projects.vercel.app'
+    ],
+    methods: ['GET, HEAD, PUT, PATCH, POST, DELETE'], // Allow the HTTP verbs the frontend will be using
+    allowedHeaders: ['Content-Type', 'Authorization'], // Allow the headers the frontend will be sending
+    credentials: true,
+}));
 
-// Serve static files from the React frontend build
-app.use(express.static(path.join(__dirname, '../../frontend/build')));
-
-// Endpoint to handle form submissions
-app.post('/api/send-message', (req: Request, res: Response) => {
-    sendMessageHandler(req as any, res as any);
+// Handle preflight requests
+app.options('*', (req, res) => {
+    res.header('Access-Control-Allow-Origin', 'req.headers.origin');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    res.sendStatus(204);
 });
 
-// Catch-all route to serve the frontend index.html
-app.get('*', (req: Request, res: Response) => {
-    res.sendFile(path.join(__dirname, '../../frontend/build', 'index.html'));
+// Middleware for parsing requests
+app.use(bodyParser.json({ limit: '30mb'}));
+app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
+app.use(express.json());
+
+// Supabase client
+const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_KEY!);
+
+// Mount API routes
+//app.use('/api/auth', userRoutes);
+app.use('/api/messages', messagesRoutes);
+
+// Connect to Supabase
+supabase.auth.getSession().then(({ data: { session } }) => {
+    if (session) {
+        console.log('Authenticated via Supabase');
+    } else {
+        console.log("Not authenticated via Supabase");
+    }
 });
 
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+// Set up Socket.io
+const server = app.listen(process.env.PORT, () => { 
+    console.log(`Server running on port ${process.env.PORT}`);
+});
+
+const io = socket(server, {
+    cors: {
+        origin: [
+            'http://localhost:3000',
+            'https://web-project-kappa-sepia.vercel.app/',
+            'https://web-project-frontend-zibin-chens-projects.vercel.app/',
+            'https://web-project-frontend-zibinchen312-zibin-chens-projects.vercel.app/'
+        ],
+        credentials: true,
+    },
+});
+
+global.onlineUsers = new Map<string, string>();
+
+io.on('connection', (socket: any) => {
+    global.chatSocket = socket;
+    socket.on('add-user', (userId: string) => {
+        onlineUsers.set(userId, socket.id);
+    });
+    socket.on('send-msg', (data: { to: string; message: string}) => {
+        const sendUserSocket = onlineUsers.get(data.to);
+        if (sendUserSocket) {
+            socket.to(sendUserSocket).emit('receive-msg', data.message);
+        }
+    });
 });

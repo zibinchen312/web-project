@@ -1,5 +1,6 @@
 // Import from React Library //
 import React, { JSX, useEffect, useState } from "react";
+import { sendMessage } from "./api/index"
 
 // Import Styles //
 import "./home.scss";
@@ -74,47 +75,44 @@ const FaithStatement: React.FC = () => {
     );
 }
 
+// HTML for the Contact Form Section //
+type SendMessageResponse = {
+    success: boolean;
+    message?: string;
+    error?: string;
+}
+
 const ContactForm: React.FC = () => {
     const [formData, setFormData] = useState({
         name: "",
         email: "",
         message: "",
     });
+    const [status, setStatus] = useState<string | null>(null);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
         setFormData({
             ...formData,
-            [e.target.name]: e.target.value,
+            [name]: value,
         });
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const apiUrl = process.env.NODE_ENV === "production"
-            ? "https://web-project-qx3m5zhxe-zibin-chens-projects.vercel.app/api/send-message"
-            : "http://localhost:3000/api/send-message";
+        const API_URL = process.env.NODE_ENV === "production"
+            ? "https://web-project-backend-psi.vercel.app"
+            : "http://localhost:3001";
 
         try {
-            const response = await fetch(apiUrl, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formData),
-            });
-    
-            const result = await response.json();
-            if (response.ok) {
-                alert("您的消息已发送，我们会尽快回复您！");
-                setFormData({ name: "", email: "", message: "" });
-            } else {
-                alert("发送失败: " + result.error);
-            }
+            const response: SendMessageResponse = await sendMessage(formData.name, formData.email, formData.message);
+            setStatus(response.message || 'Message sent successfully!');
+            setFormData({ name: '', email: '', message: '' });
         } catch (error) {
-            console.error("Error:", error);
-            alert("发送失败，请稍后再试！");
-        }
+            console.error('Error sending message:', error);
+            setStatus('Failed to send message due to an unknown error');
+        };
     };
 
     return (
@@ -169,7 +167,7 @@ const ContactForm: React.FC = () => {
             </div>
         </section>
     );
-}
+};
 
 // Home Component //
 export default function Home(): JSX.Element {
@@ -196,5 +194,5 @@ export default function Home(): JSX.Element {
 
         <ContactForm />
     </>
-);
+    );
 }
