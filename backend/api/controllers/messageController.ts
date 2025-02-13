@@ -22,7 +22,8 @@ export const addMessage = async (req: Request, res: Response): Promise<any> => {
             console.error('Error sending message:', error);
             return res.status(500).json({ error: error.message });
         }
-
+        
+        console.log('Message inserted successfully:', data);
         return res.status(200).json({ success: true, message: 'Message sent successfully!' });
     } catch (error) {
         console.error('Error sending message:', error);

@@ -1,11 +1,10 @@
 import 'dotenv/config';
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import { createClient } from '@supabase/supabase-js';
 //import userRoutes from './routes/userRouts';
 import messagesRoutes from './routes/messagesRoute';
-
 const socket = require('socket.io');
 
 declare global {
@@ -13,42 +12,37 @@ declare global {
     var chatSocket: any;
 }
 
+const allowedOrigins = [
+    'http://localhost:3000',
+    'https://web-project-kappa-sepia.vercel.app',
+    'https://web-project-frontend-zibin-chens-projects.vercel.app',
+    'https://web-project-frontend-zibinchen312-zibin-chens-projects.vercel.app'
+];
+
 const app = express();
-require("dotenv").config();
 
 // Middleware
 app.use(cors({
-    origin: [
-        'http://localhost:3000',
-        'https://web-project-kappa-sepia.vercel.app',
-        'https://web-project-frontend-zibin-chens-projects.vercel.app',
-        'https://web-project-frontend-zibinchen312-zibin-chens-projects.vercel.app'
+    origin: allowedOrigins,
+    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'], 
+    allowedHeaders: [
+        'X-CSRF-Token', 'X-Requested-With', 'Accept', 'Accept-Version', 
+        'Content-Length', 'Content-MD5', 'Content-Type', 'Date', 'X-Api-Version'
     ],
-    methods: ['GET, HEAD, PUT, PATCH, POST, DELETE'], // Allow the HTTP verbs the frontend will be using
-    allowedHeaders: ['Content-Type', 'Authorization'], // Allow the headers the frontend will be sending
     credentials: true,
 }));
-
-// Handle preflight requests
-app.options('*', (req, res) => {
-    res.header('Access-Control-Allow-Origin', 'req.headers.origin');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    res.header('Access-Control-Allow-Credentials', 'true');
-    res.sendStatus(204);
-});
 
 // Middleware for parsing requests
 app.use(bodyParser.json({ limit: '30mb'}));
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 app.use(express.json());
 
-// Supabase client
-const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_KEY!);
-
 // Mount API routes
 //app.use('/api/auth', userRoutes);
 app.use('/api/messages', messagesRoutes);
+
+// Supabase client
+const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
 
 // Connect to Supabase
 supabase.auth.getSession().then(({ data: { session } }) => {
@@ -68,9 +62,9 @@ const io = socket(server, {
     cors: {
         origin: [
             'http://localhost:3000',
-            'https://web-project-kappa-sepia.vercel.app/',
-            'https://web-project-frontend-zibin-chens-projects.vercel.app/',
-            'https://web-project-frontend-zibinchen312-zibin-chens-projects.vercel.app/'
+            'https://web-project-kappa-sepia.vercel.app',
+            'https://web-project-frontend-zibin-chens-projects.vercel.app',
+            'https://web-project-frontend-zibinchen312-zibin-chens-projects.vercel.app'
         ],
         credentials: true,
     },

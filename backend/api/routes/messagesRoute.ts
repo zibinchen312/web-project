@@ -1,9 +1,12 @@
-// src/routes/messagesRoute.ts
-import { Router, Request, Response } from 'express';
+import { Router } from 'express';
 import { addMessage } from '../controllers/messageController';
 
 const router = Router();
 
-router.post('/send', addMessage);
+// Log incoming requests and pass to controller
+router.post('/send', (req, res, next) => {
+    console.log('Incoming request:', req.body);
+    next();
+}, addMessage);
 
 export default router;

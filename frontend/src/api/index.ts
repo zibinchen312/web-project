@@ -4,10 +4,8 @@ const API_URL = process.env.NODE_ENV === "production"
 ? "https://web-project-backend-psi.vercel.app"
 : "http://localhost:3001";
 
-export const host = `${API_URL}`;
-
 const API = axios.create({
-    baseURL: host,
+    baseURL: API_URL,
 });
 
 export type SendMessageResponse = {
@@ -23,6 +21,7 @@ export const sendMessage = async (
 ): Promise<SendMessageResponse> => {
     try {
         const response = await API.post(`/api/messages/send`, { name, email, message });
+        console.log('Send message response:', response.data);
         return response.data;
     } catch (error) {
         console.error("Error sending message:", error);
@@ -31,6 +30,5 @@ export const sendMessage = async (
         } else {
             return { success: false, error: "Failed to send message due to an unknown error" };
         }
-    }
-    
-}
+    }  
+};

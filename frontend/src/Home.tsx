@@ -1,6 +1,6 @@
 // Import from React Library //
 import React, { JSX, useEffect, useState } from "react";
-import { sendMessage } from "./api/index"
+import { sendMessage, SendMessageResponse } from "./api/index";
 
 // Import Styles //
 import "./home.scss";
@@ -76,12 +76,6 @@ const FaithStatement: React.FC = () => {
 }
 
 // HTML for the Contact Form Section //
-type SendMessageResponse = {
-    success: boolean;
-    message?: string;
-    error?: string;
-}
-
 const ContactForm: React.FC = () => {
     const [formData, setFormData] = useState({
         name: "",
@@ -100,10 +94,6 @@ const ContactForm: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
-        const API_URL = process.env.NODE_ENV === "production"
-            ? "https://web-project-backend-psi.vercel.app"
-            : "http://localhost:3001";
 
         try {
             const response: SendMessageResponse = await sendMessage(formData.name, formData.email, formData.message);
