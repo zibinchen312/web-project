@@ -1,4 +1,4 @@
-import React, { useState }  from 'react';
+import React, { useEffect, useState }  from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import './navbar.scss';
@@ -7,6 +7,22 @@ const Navbar: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [menuOpen, setMenuOpen] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        const user = localStorage.getItem('user');
+        setIsLoggedIn(!!user);
+    }, []);
+
+    const handleLogin = () => {
+        navigate('/login');
+    };
+
+    const handleLogout = () => {
+        localStorage.removeItem('user');
+        setIsLoggedIn(false);
+        navigate('/');
+    };
 
     const handleLinkClick = (path: string) => {
         navigate(path);
@@ -23,7 +39,7 @@ const Navbar: React.FC = () => {
     return (
         <nav className="navbar navbar-expand-lg navbar-light" id="nav-main">
             <div className="container-fluid">
-                <div className="navbar-brand" onClick={() => navigate("/")}>
+                <div className="navbar-brand" id="nav-title" onClick={() => navigate("/")}>
                     芝加哥人教会
                 </div>
                 <button
@@ -43,15 +59,24 @@ const Navbar: React.FC = () => {
                         <li className={`nav-item ${isActive("/")}`}>
                             <button className="nav-link" onClick={() => handleLinkClick("/")}>首页</button>
                         </li>
-                        <li className={`nav-item ${isActive("/about")}`}>
-                            <button className="nav-link" onClick={() => handleLinkClick("/about")}>活动</button>
+                        <li className={`nav-item ${isActive("/events")}`}>
+                            <button className="nav-link" onClick={() => handleLinkClick("/events")}>活动</button>
                         </li>
-                        <li className={`nav-item ${isActive("/locations")}`}>
-                            <button className="nav-link" onClick={() => handleLinkClick("/locations")}>关于我们</button>
+                        <li className={`nav-item ${isActive("/blogs")}`}>
+                            <button className="nav-link" onClick={() => handleLinkClick("/blogs")}>信息</button>
                         </li>
                         <li className={`nav-item ${isActive("/contact")}`}>
                             <button className="nav-link" onClick={() => handleLinkClick("/contact")}>联系我们</button>
                         </li>
+                        {!isLoggedIn ? (
+                            <li className="nav-item">
+                                <button className="nav-link" onClick={handleLogin}>登录</button>
+                            </li>
+                        ) : (
+                            <li className="nav-item">
+                                <button className="nav-link" onClick={handleLogout}>注销</button>
+                            </li>
+                        )}
                     </ul>
                 </div>
             </div>

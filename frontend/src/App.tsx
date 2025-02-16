@@ -1,26 +1,42 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import './App.scss';
 import Navbar from './components/Navbar';
-import Home from './Home';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Blogs from './pages/Articles';
 import Footer from './components/Footer';
 //import About from './components/About';
 //import Contact from './components/Contact';
+import ProtectedRoute from './components/ProtectedRoute';
 
 const App: React.FC = () => {
     return (
         <Router>
-            <Navbar />
+            <AppLayout />
+        </Router>
+    );
+};
+
+const AppLayout: React.FC = () => {
+    const location = useLocation();
+    const isLoginPage = location.pathname === '/login';
+
+    return (
+        <>
+            {!isLoginPage && <Navbar />}
             <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/blogs" element={<ProtectedRoute><Blogs /></ProtectedRoute>} />
+                <Route path="/login" element={<Login />} /> {/* Add the login route */}
                 {/*<Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />*/}
             </Routes>
-            <Footer />
-        </Router>
+            {!isLoginPage && <Footer />}
+        </>
     );
 };
 

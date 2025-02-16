@@ -14,8 +14,8 @@
     "forceConsistentCasingInFileNames": true,
     "noEmitOnError": true,
     "jsx": "react",
-    "types": ["node", "jest", "@testing-library/jest-dom", "@testing-library/react", "react", "react-dom", "@types/react-router-dom"],
-    "typeRoots": ["./node_modules/@types", "./path/to/types", "./src/types"],
+    "types": ["node", "jest", "@testing-library/jest-dom", "@testing-library/react"],
+    "typeRoots": ["./node_modules/@types"],
     "baseUrl": "./",
     "paths": {
       "@testing-library/react": ["node_modules/@testing-library/react"]

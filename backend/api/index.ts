@@ -5,10 +5,10 @@ import bodyParser from 'body-parser';
 import { createClient } from '@supabase/supabase-js';
 //import userRoutes from './routes/userRouts';
 import messagesRoutes from './routes/messagesRoute';
-const socket = require('socket.io');
+const socketIo = require('socket.io');
 
 declare global {
-    var onlineUsers: any;
+    var onlineUsers: Map<string, string>;
     var chatSocket: any;
 }
 
@@ -38,7 +38,6 @@ app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 app.use(express.json());
 
 // Mount API routes
-//app.use('/api/auth', userRoutes);
 app.use('/api/messages', messagesRoutes);
 
 // Supabase client
@@ -58,14 +57,9 @@ const server = app.listen(process.env.PORT, () => {
     console.log(`Server running on port ${process.env.PORT}`);
 });
 
-const io = socket(server, {
+const io = socketIo(server, {
     cors: {
-        origin: [
-            'http://localhost:3000',
-            'https://web-project-kappa-sepia.vercel.app',
-            'https://web-project-frontend-zibin-chens-projects.vercel.app',
-            'https://web-project-frontend-zibinchen312-zibin-chens-projects.vercel.app'
-        ],
+        origin: allowedOrigins,
         credentials: true,
     },
 });

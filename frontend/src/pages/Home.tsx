@@ -1,18 +1,18 @@
 // Import from React Library //
 import React, { JSX, useEffect, useState } from "react";
-import { sendMessage, SendMessageResponse } from "./api/index";
+import { sendMessage, SendMessageResponse } from "../api/index";
 
 // Import Styles //
 import "./home.scss";
 
 // Import Images //
-import bgimage from "./images/homebg1.png";
-import ssimage from "./images/sundayservice.png";
+import bgimage from "../images/homebg1.png";
+import ssimage from "../images/sundayservice.png";
 
 // HTML for the Background Image Section //
 const HomeImage: React.FC = () => {
     return (
-        <section id="home" className="container">
+        <section id="home" className="container py-5">
             <div className="home-content">
                 <img src={bgimage} alt="Church Meeting" className="home-bg-image img-fluid"/>
                 <div className="home-heading">
@@ -162,17 +162,52 @@ const ContactForm: React.FC = () => {
 // Home Component //
 export default function Home(): JSX.Element {
 
-    // Adjust margin-top of home to account for the fixed navbar
     useEffect(() => {
-        const topnav = document.getElementById("nav-main");
+        const topnav = document.getElementById("nav-title");
         const home = document.getElementById("home");
 
         if (topnav && home) {
             const navHeight = topnav.offsetHeight;  // Get the height of the navbar
-            home.style.marginTop = `${navHeight}px`;    // Set the margin-top of home to the height of navbar
+            home.style.marginTop = `${navHeight + 20}px`;    // Set the margin-top of home to the height of navbar
         }
 
     }, []);
+
+/*
+    const updateMargin = () => {
+        const topnav = document.getElementById("nav-main");
+        const home = document.getElementById("home");
+    
+        if (topnav && home) {
+          const navHeight = topnav.offsetHeight; // Get the height of the navbar
+          home.style.marginTop = `${navHeight}px`; // Set margin-top of home to the navbar's height
+        }
+      };
+    
+      useEffect(() => {
+        // Initial update on mount
+        updateMargin();
+    
+        // Get the navbar element
+        const topnav = document.getElementById("nav-main");
+        if (!topnav) return;
+    
+        // Create a ResizeObserver to watch for changes in the navbar's size
+        const resizeObserver = new ResizeObserver(() => {
+          updateMargin();
+        });
+        resizeObserver.observe(topnav);
+    
+        // Also update margin on window resize (for good measure)
+        window.addEventListener("resize", updateMargin);
+    
+        // Clean up when the component unmounts
+        return () => {
+          resizeObserver.disconnect();
+          window.removeEventListener("resize", updateMargin);
+        };
+      }, []);
+*/
 
     return (
     <>
