@@ -26,6 +26,7 @@ const Navbar: React.FC = () => {
 
     const handleLinkClick = (path: string) => {
         navigate(path);
+        setMenuOpen(false);
     };
 
     const isActive = (path: string) => {
@@ -73,9 +74,14 @@ const Navbar: React.FC = () => {
                                 <button className="nav-link" onClick={handleLogin}>登录</button>
                             </li>
                         ) : (
-                            <li className="nav-item">
-                                <button className="nav-link" onClick={handleLogout}>注销</button>
-                            </li>
+                            <>
+                                <li className={`nav-item ${isActive("/portal")}`}>
+                                    <button className="nav-link" onClick={() => handleLinkClick("/portal")}>我的空间</button>
+                                </li>
+                                <li className="nav-item">
+                                    <button className="nav-link" onClick={handleLogout}>注销</button>
+                                </li>
+                            </>
                         )}
                     </ul>
                 </div>

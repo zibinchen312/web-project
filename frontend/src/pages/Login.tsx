@@ -1,28 +1,33 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './login.scss'; // Import the styles
+import { login, LoginResponse } from '../api/index';
 
 const LoginPage: React.FC = () => {
     const navigate = useNavigate();
+    const location =useLocation();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleLogin = () => {
-        // For simplicity, we'll use a hardcoded username and password
-        const validUsername = 'admin';
-        const validPassword = 'godislove';
-
-        if (username === validUsername && password === validPassword) {
-            localStorage.setItem('user', username);
-            navigate('/');
-        } else {
+    const handleLogin = async () => {
+        try {
+            const response: LoginResponse = await login(username, password);
+            if (response.success) {
+                localStorage.setItem('user', username);
+                const { from } = location.state || { from: { pathname: '/' } };
+                navigate(from.pathname);
+            } else {
+                alert(response.error || 'Invalid username or password');
+            }
+        } catch (error) {
+            console.error('Login error: ', error);
             alert('Invalid username or password');
         }
     };
 
     const handleReturnHome = () => {
         navigate('/');
-    }
+    };
 
     return (
         <div id="login">

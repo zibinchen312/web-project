@@ -8,10 +8,11 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Blogs from './pages/Articles';
+import Portal from './pages/Portal';
 import Footer from './components/Footer';
 //import About from './components/About';
 //import Contact from './components/Contact';
-import ProtectedRoute from './components/ProtectedRoute';
+//import ProtectedRoute from './components/ProtectedRoute';
 
 const App: React.FC = () => {
     return (
@@ -30,8 +31,9 @@ const AppLayout: React.FC = () => {
             {!isLoginPage && <Navbar />}
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/blogs" element={<ProtectedRoute><Blogs /></ProtectedRoute>} />
+                <Route path="/blogs" element={<Blogs />} />
                 <Route path="/login" element={<Login />} /> {/* Add the login route */}
+                <Route path="/portal" element={<Portal />} />
                 {/*<Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />*/}
             </Routes>

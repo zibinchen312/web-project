@@ -3,9 +3,14 @@ import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import { createClient } from '@supabase/supabase-js';
-//import userRoutes from './routes/userRouts';
+import { Server } from 'http';
+import { Server as SocketIOServer } from 'socket.io';
+
+import userRoutes from './routes/userRoute';
+import articleRoutes from "./routes/articlesRoute";
 import messagesRoutes from './routes/messagesRoute';
-const socketIo = require('socket.io');
+import uploadImageRoutes from './routes/uploadImageRoute';
+import { createBucket } from './supabaseClient';
 
 declare global {
     var onlineUsers: Map<string, string>;
@@ -37,9 +42,6 @@ app.use(bodyParser.json({ limit: '30mb'}));
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 app.use(express.json());
 
-// Mount API routes
-app.use('/api/messages', messagesRoutes);
-
 // Supabase client
 const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
 
@@ -52,17 +54,20 @@ supabase.auth.getSession().then(({ data: { session } }) => {
     }
 });
 
-// Set up Socket.io
-const server = app.listen(process.env.PORT, () => { 
-    console.log(`Server running on port ${process.env.PORT}`);
-});
+// Create a new bucket when the app starts
+const bucketName = 'images';
+const isPublic = false;
 
-const io = socketIo(server, {
+createBucket(bucketName, isPublic);
+
+// Set up Socket.io
+const httpServer: Server = require('http').createServer(app);
+const io = new SocketIOServer(httpServer, {
     cors: {
         origin: allowedOrigins,
         credentials: true,
-    },
-});
+    }
+})
 
 global.onlineUsers = new Map<string, string>();
 
@@ -77,4 +82,16 @@ io.on('connection', (socket: any) => {
             socket.to(sendUserSocket).emit('receive-msg', data.message);
         }
     });
+});
+
+// Mount API routes
+app.use('/api/messages', messagesRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/articles', articleRoutes);
+app.use('/api/upload', uploadImageRoutes);
+
+const PORT = process.env.PORT || 3001;
+
+httpServer.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
