@@ -33,4 +33,30 @@ router.post('/login', async (req: Request, res: Response): Promise<any> => {
     res.json({ success: true, message: "Login successful", token: sessionToken });
 });
 
+router.get('/uuid/:username', async (req: Request, res: Response): Promise<any> => {
+    const { username } = req.params;
+
+    try {
+        const { data, error } = await supabase
+            .from('users')
+            .select('id')
+            .eq('username', username)
+            .single();
+
+        if (error) {
+            console.error(`Error fetching UUID for username ${username}:`, error);
+            return res.status(500).json({ error: 'Internal server error' });
+        }
+
+        if (!data) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        res.json({ uuid: data.id });
+    } catch (err: any) {
+        console.error(`Error fetching UUID for username ${username}:`, err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 export default router;

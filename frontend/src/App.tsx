@@ -7,7 +7,8 @@ import './App.scss';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Login from './pages/Login';
-import Blogs from './pages/Articles';
+import Articles from './pages/Articles';
+import ArticleDetails from './pages/ArticleDetails';
 import Portal from './pages/Portal';
 import Footer from './components/Footer';
 //import About from './components/About';
@@ -31,7 +32,8 @@ const AppLayout: React.FC = () => {
             {!isLoginPage && <Navbar />}
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/blogs" element={<Blogs />} />
+                <Route path="/articles" element={<Articles />} />
+                <Route path="/article/:id" element={<ArticleDetails />} />
                 <Route path="/login" element={<Login />} /> {/* Add the login route */}
                 <Route path="/portal" element={<Portal />} />
                 {/*<Route path="/about" element={<About />} />

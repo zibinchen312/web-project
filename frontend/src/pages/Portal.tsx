@@ -1,8 +1,9 @@
 import React, { JSX, useState, useEffect, ChangeEvent } from 'react';
-import { Article, getArticles, deleteArticle, createArticle, updateArticle, uploadImage } from '../api/index';
+import { Article, getArticles, deleteArticle, createArticle, updateArticle, uploadImage, getUserId } from '../api/index';
 import './portal.scss';
 
 const Articles: React.FC = () => {
+    const [userUuid, setUserUuid] = useState<string | undefined>(undefined);
     const [articles, setArticles] = useState<Article[]>([]);
     const [articleForm, setArticleForm] = useState({
         title: '',
@@ -50,20 +51,49 @@ const Articles: React.FC = () => {
 
         setLoading(true);
         setError(null);
+
         try {
+            console.log('Uploading image...'); // Log image upload start
             const uploadedImageUrl = await uploadImage(articleForm.imageFile);
+    
             if (!uploadedImageUrl) {
+                console.log('Image upload failed.'); // Log image upload failure
                 throw new Error('Failed to upload image.');
             }
+    
+            console.log('Image uploaded successfully. URL:', uploadedImageUrl); // Log successful image upload
+    
+            console.log('Creating new article...'); // Log article creation start
 
-            const newArticle = await createArticle(articleForm.title, articleForm.author, articleForm.content, uploadedImageUrl);
+            const username = localStorage.getItem('user');
+
+            if (!username) {
+                alert('User not logged in!');
+                return;
+            }
+
+            if (!userUuid) {
+                const fetchedUuid = await getUserId(username);
+                if (fetchedUuid) {
+                    setUserUuid(fetchedUuid);
+                } else {
+                    alert('User uuid not found!');
+                    return;
+                }
+            }
+
+            const newArticle = await createArticle(articleForm.title, articleForm.author, articleForm.content, userUuid!, uploadedImageUrl);
+    
+            console.log('Article created successfully:', newArticle); // Log successful article creation
+    
             setArticles([...articles, newArticle]);
             resetForm();
-        } catch (err) {
+        } catch (err: any) {
+            console.error('Error creating article:', err); // Log the error
             setError('Failed to create article.');
-            console.error('Error creating article:', err);
         } finally {
             setLoading(false);
+            console.log('handleCreateArticle completed.'); // Log function completion
         }
     };
 
@@ -182,13 +212,19 @@ const Articles: React.FC = () => {
             </div>
 
             <div className="row">
-                {articles.map(article => (
+
+                {articles.map(article => {
+                    if (!article) {
+                        return null; // Skip rendering null/undefined articles
+                    }
+                    
+                    return (
                     <div key={article.id} className="col-md-4 mb-4">
                         <div className="card">
                             <div className="card-body">
                                 <h5 className="card-title">{article.title}</h5>
                                 <p className="card-text">{article.content}</p>
-                                {article.image_url && <img src={article.image_url} alt="Article Image" className="img-fluid" />}
+                                {article.image && <img src={article.image} alt="Article Image" className="img-fluid" />}
                                 <button className="btn btn-primary mr-2" onClick={() => handleEditArticle(article)}>
                                     Edit
                                 </button>
@@ -198,7 +234,7 @@ const Articles: React.FC = () => {
                             </div>
                         </div>
                     </div>
-                ))}
+                )})}
             </div>
         </div>
     );
@@ -212,7 +248,7 @@ export default function Portal(): JSX.Element {
 
         if (topnav && portal) {
             const navHeight = topnav.offsetHeight;  // Get the height of the navbar
-            portal.style.marginTop = `${navHeight}px`;    // Set the margin-top of home to the height of navbar
+            portal.style.marginTop = `${navHeight + 20}px`;    // Set the margin-top of home to the height of navbar
         }
     }, []);
 

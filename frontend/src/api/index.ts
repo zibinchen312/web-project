@@ -55,12 +55,25 @@ export const login = async (username: string, password: string): Promise<LoginRe
     }
 };
 
+// Retrieve User ID
+export const getUserId = async (username: string): Promise<string | null> => {
+    try {
+        const response = await API.get(`/api/users/uuid/${username}`);
+        console.log('Get user ID response:', response.data);
+        return response.data.uuid;
+    } catch (error) {
+        console.error("Error getting user ID:", error);
+        return null;
+    }
+};
+
 export type Article = {
     id: number;
     title: string;
     author: string;
     content: string;
-    image_url?: string;
+    image?: string;
+    uuid: string;
 };
 
 export const getArticles = async (): Promise<Article[]> => {
@@ -73,9 +86,19 @@ export const getArticles = async (): Promise<Article[]> => {
     }
 };
 
-export const createArticle = async (title: string, author: string, content: string, image_url?: string): Promise<Article> => {
+export const getArticleById = async (id: string): Promise<Article> => {
     try {
-        const response = await API.post('/api/articles', { title, author, content, image_url });
+        const response = await API.get(`/api/articles/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error("Failed to fetch article:", error);
+        throw error;
+    }
+};
+
+export const createArticle = async (title: string, author: string, content: string, uuid: string, image?: string): Promise<Article> => {
+    try {
+        const response = await API.post('/api/articles', { title, author, content, image, uuid });
         return response.data;
     } catch (error) {
         console.error("Error creating article:", error);
@@ -83,9 +106,9 @@ export const createArticle = async (title: string, author: string, content: stri
     }
 };
 
-export const updateArticle = async (id: number, title: string, author: string, content: string, image_url?: string): Promise<Article> => {
+export const updateArticle = async (id: number, title: string, author: string, content: string, image?: string): Promise<Article> => {
     try {
-        const response = await API.put(`/api/articles/${id}`, { title, author, content, image_url });
+        const response = await API.put(`/api/articles/${id}`, { title, author, content, image });
         return response.data;
     } catch (error) {
         console.error('Error updating article:', error);
@@ -112,6 +135,7 @@ export const uploadImage = async (file: File): Promise<string | null> => {
                 'Content-Type': 'multipart/form-data'
             }
         });
+        console.log('Upload success:', response.data);
         return response.data.url;
     } catch (error) {
         console.error('Error uploading image:', error);

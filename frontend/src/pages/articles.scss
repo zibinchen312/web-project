@@ -1,0 +1,24 @@
+.article-box {
+    cursor: pointer;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    max-height: 150px; /* Initial max height */
+}
+
+.article-box.expanded {
+    max-height: 1000px; /* Expand to a large value */
+}
+
+.article-image {
+    max-height: 150px; /* Limit image height */
+    object-fit: cover; /* Maintain aspect ratio */
+}
+
+.article-text {
+    max-height: 150px; /* Limit text height */
+    overflow: hidden; /* Hide overflow */
+}
+
+.article-text.expanded {
+    max-height: none; /* remove height limit when expanded */
+}

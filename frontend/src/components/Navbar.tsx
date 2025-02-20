@@ -63,8 +63,8 @@ const Navbar: React.FC = () => {
                         <li className={`nav-item ${isActive("/events")}`}>
                             <button className="nav-link" onClick={() => handleLinkClick("/events")}>活动</button>
                         </li>
-                        <li className={`nav-item ${isActive("/blogs")}`}>
-                            <button className="nav-link" onClick={() => handleLinkClick("/blogs")}>信息</button>
+                        <li className={`nav-item ${isActive("/articles")}`}>
+                            <button className="nav-link" onClick={() => handleLinkClick("/articles")}>信息</button>
                         </li>
                         <li className={`nav-item ${isActive("/contact")}`}>
                             <button className="nav-link" onClick={() => handleLinkClick("/contact")}>联系我们</button>
