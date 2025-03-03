@@ -1,6 +1,5 @@
 import React, { useEffect, useState }  from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-
 import './navbar.scss';
 
 const Navbar: React.FC = () => {

@@ -243,13 +243,16 @@ const Articles: React.FC = () => {
 export default function Portal(): JSX.Element {
 
     useEffect(() => {
-        const topnav = document.getElementById("nav-main");
-        const portal = document.getElementById("portal");
+        const interval = setInterval(() => {
+            const topnav = document.getElementById("nav-title");
+            const home = document.getElementById("portal");
 
-        if (topnav && portal) {
-            const navHeight = topnav.offsetHeight;  // Get the height of the navbar
-            portal.style.marginTop = `${navHeight + 20}px`;    // Set the margin-top of home to the height of navbar
-        }
+            if (topnav && home) {
+                const navHeight = topnav.offsetHeight;  // Get the height of the navbar
+                home.style.marginTop = `${navHeight + 20}px`;    // Set the margin-top of home to the height of navbar
+            }
+        }, 100);
+        return () => clearInterval(interval);
     }, []);
 
     return (

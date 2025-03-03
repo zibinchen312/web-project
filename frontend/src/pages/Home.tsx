@@ -1,6 +1,6 @@
 // Import from React Library //
 import React, { JSX, useEffect, useState } from "react";
-import { sendMessage, SendMessageResponse } from "../api/index";
+import { sendMessage, SendMessageResponse, getArticles, Article } from "../api/index";
 
 // Import Styles //
 import "./home.scss";
@@ -10,9 +10,98 @@ import bgimage from "../images/homebg1.png";
 import ssimage from "../images/sundayservice.png";
 
 // HTML for the Background Image Section //
-const HomeImage: React.FC = () => {
+const EventSlider: React.FC = () => {
+    const [events, setEvents] = useState<Article[]>([]);
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        const fetchEvents = async () => {
+          setLoading(true);
+          try {
+            const eventsData = await getArticles();
+            // Assuming eventsData is sorted descending by id,
+            // we only take the first 5 elements.
+            setEvents(eventsData.slice(0, 5));
+          } catch (err: any) {
+            setError(err.message || "Failed to fetch events.");
+          } finally {
+            setLoading(false);
+          }
+        };
+    
+        fetchEvents();
+    }, []);
+
+    const totalSlides = events.length + 1;
+
+    useEffect(() => {
+        if (totalSlides === 0) return;
+        const intervalId = setInterval(() => {
+          setCurrentIndex((prevIndex) => (prevIndex + 1) % totalSlides);
+        }, 10000);
+        return () => clearInterval(intervalId);
+    }, [totalSlides]);
+    
+    const toPrevious = () => {
+        setCurrentIndex((prevIndex) => (prevIndex === 0 ? totalSlides - 1 : prevIndex - 1));
+    };
+
+    const toNext = () => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % totalSlides);
+    };
+
+    if (loading) {
+        return <div>Loading events...</div>;
+    }
+    
+    if (error) {
+        return <div>{error}</div>;
+    }
+    
+    if (events.length === 0) {
+        return <div>No events available.</div>;
+    }
+
     return (
-        <section id="home" className="container py-5">
+        <section id="slideshow" className="container py-5">
+            <div className="carousel slide">
+                <div className="carousel-indicators">
+                    {Array.from({ length: totalSlides }).map((_, idx) => (
+                        <button
+                            key={idx}
+                            className={`indicator ${idx === currentIndex ? "active" : ""}`}
+                            onClick={() => setCurrentIndex(idx)}
+                        >
+                        </button>
+                    ))}
+                </div>
+                <div className="carousel-inner">
+                    <div className={`carousel-item justify-content-center align-items-center ${currentIndex === 0 ? "active" : ""}`}>
+                        <img className="slide-image" src={bgimage} alt="home" />
+                        <h1 className="home-text">认识基督<br></br>享受祂的丰富</h1>
+                    </div>
+                    {events.map((event, index) => (
+                        <div key={event.id} className={`carousel-item ${index + 1 === currentIndex ? "active" : ""}`}>
+                            <img className="slide-image" src={event.image} alt={event.title} />
+                            <h3 className="carousel-caption d-none d-md-block">{event.title}</h3>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Left and Right Arrow Navigation */}
+                <a className="carousel-control-prev justify-content-start" onClick={toPrevious} style={{ cursor: "pointer"}}>
+                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span className="visually-hidden">Previous</span>
+                </a>
+                <a className="carousel-control-next justify-content-end" onClick={toNext} style={{ cursor: "pointer" }}>
+                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span className="visually-hidden">Next</span>
+                </a>
+            </div>
+            
+        {/*
             <div className="home-content">
                 <img src={bgimage} alt="Church Meeting" className="home-bg-image img-fluid"/>
                 <div className="home-heading">
@@ -20,9 +109,10 @@ const HomeImage: React.FC = () => {
                     <h1 className="heading2">享受祂的丰富</h1>
                 </div>
             </div>
+        */}
         </section>
     );
-}
+};
 
 // HTML for the Info Section //
 const InfoSection: React.FC = () => {
@@ -163,14 +253,16 @@ const ContactForm: React.FC = () => {
 export default function Home(): JSX.Element {
 
     useEffect(() => {
-        const topnav = document.getElementById("nav-title");
-        const home = document.getElementById("home");
+        const interval = setInterval(() => {
+            const topnav = document.getElementById("nav-title");
+            const home = document.getElementById("slideshow");
 
-        if (topnav && home) {
-            const navHeight = topnav.offsetHeight;  // Get the height of the navbar
-            home.style.marginTop = `${navHeight + 20}px`;    // Set the margin-top of home to the height of navbar
-        }
-
+            if (topnav && home) {
+                const navHeight = topnav.offsetHeight;  // Get the height of the navbar
+                home.style.marginTop = `${navHeight + 20}px`;    // Set the margin-top of home to the height of navbar
+            }
+        }, 100);
+        return () => clearInterval(interval);
     }, []);
 
 /*
@@ -211,7 +303,7 @@ export default function Home(): JSX.Element {
 
     return (
     <>
-        <HomeImage />
+        <EventSlider />
 
         <InfoSection />
 

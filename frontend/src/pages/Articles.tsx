@@ -72,15 +72,18 @@ const ArticlesDisplay: React.FC = () => {
 
 const Articles: React.FC = (): JSX.Element => {
 
-    useEffect(() => {
-        const topnav = document.getElementById('nav-main');
-        const article = document.getElementById('article');
-
-        if (topnav && article) {
-            const navHeight = topnav.offsetHeight;  // Get the height of the navbar
-            article.style.marginTop = `${navHeight + 20}px`;    // Set the margin-top of home to the height of navbar
-        }
-    }, []);
+        useEffect(() => {
+            const interval = setInterval(() => {
+                const topnav = document.getElementById("nav-title");
+                const home = document.getElementById("article");
+    
+                if (topnav && home) {
+                    const navHeight = topnav.offsetHeight;  // Get the height of the navbar
+                    home.style.marginTop = `${navHeight + 20}px`;    // Set the margin-top of home to the height of navbar
+                }
+            }, 100);
+            return () => clearInterval(interval);
+        }, []);
 
     return (
         <>
