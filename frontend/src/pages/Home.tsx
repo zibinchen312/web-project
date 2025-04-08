@@ -1,5 +1,5 @@
 // Import from React Library //
-import React, { JSX, useEffect, useState } from "react";
+import React, { JSX, useEffect, useState, useRef } from "react";
 import { sendMessage, SendMessageResponse, getArticles, Article } from "../api/index";
 
 // Import Styles //
@@ -9,10 +9,15 @@ import "./home.scss";
 import bgimage from "../images/homebg1.png";
 import ssimage from "../images/sundayservice.png";
 
+import campus1Icon from "../images/UIC_icon.png";
+import campus2Icon from "../images/UIC_icon.png";
+import campus3Icon from "../images/UIC_icon.png";
+
 // HTML for the Background Image Section //
 const EventSlider: React.FC = () => {
     const [events, setEvents] = useState<Article[]>([]);
     const [currentIndex, setCurrentIndex] = useState(0);
+    const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -36,20 +41,34 @@ const EventSlider: React.FC = () => {
 
     const totalSlides = events.length + 1;
 
+    const startInterval = () => {
+        if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+        }
+        intervalRef.current = setInterval(() => {
+            setCurrentIndex((prevIndex) => (prevIndex + 1) % totalSlides);
+        }, 10000)
+    };
+
     useEffect(() => {
-        if (totalSlides === 0) return;
-        const intervalId = setInterval(() => {
-          setCurrentIndex((prevIndex) => (prevIndex + 1) % totalSlides);
-        }, 10000);
-        return () => clearInterval(intervalId);
+        if (totalSlides > 0) {
+            startInterval();
+        }
+        return () => {
+            if (intervalRef.current !== null) {
+                clearInterval(intervalRef.current);
+            }
+        }
     }, [totalSlides]);
     
     const toPrevious = () => {
         setCurrentIndex((prevIndex) => (prevIndex === 0 ? totalSlides - 1 : prevIndex - 1));
+        startInterval();
     };
 
     const toNext = () => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % totalSlides);
+        startInterval();
     };
 
     if (loading) {
@@ -65,18 +84,8 @@ const EventSlider: React.FC = () => {
     }
 
     return (
-        <section id="slideshow" className="container py-5">
+        <section id="slideshow" className="container">
             <div className="carousel slide">
-                <div className="carousel-indicators">
-                    {Array.from({ length: totalSlides }).map((_, idx) => (
-                        <button
-                            key={idx}
-                            className={`indicator ${idx === currentIndex ? "active" : ""}`}
-                            onClick={() => setCurrentIndex(idx)}
-                        >
-                        </button>
-                    ))}
-                </div>
                 <div className="carousel-inner">
                     <div className={`carousel-item justify-content-center align-items-center ${currentIndex === 0 ? "active" : ""}`}>
                         <img className="slide-image" src={bgimage} alt="home" />
@@ -85,7 +94,7 @@ const EventSlider: React.FC = () => {
                     {events.map((event, index) => (
                         <div key={event.id} className={`carousel-item ${index + 1 === currentIndex ? "active" : ""}`}>
                             <img className="slide-image" src={event.image} alt={event.title} />
-                            <h3 className="carousel-caption d-none d-md-block">{event.title}</h3>
+                            <h2 className="carousel-caption">{event.title}</h2>
                         </div>
                     ))}
                 </div>
@@ -99,6 +108,16 @@ const EventSlider: React.FC = () => {
                     <span className="carousel-control-next-icon" aria-hidden="true"></span>
                     <span className="visually-hidden">Next</span>
                 </a>
+            </div>
+            <div className="carousel-indicators">
+                {Array.from({ length: totalSlides }).map((_, idx) => (
+                    <button
+                        key={idx}
+                        className={`indicator ${idx === currentIndex ? "active" : ""}`}
+                        onClick={() => setCurrentIndex(idx)}
+                    >
+                    </button>
+                ))}
             </div>
             
         {/*
@@ -128,10 +147,10 @@ const InfoSection: React.FC = () => {
                         每周日下午四点半，欢迎你来参加我们的主日聚会！
                     </p>
                     <p>
-                        聚会地点：<strong>301 W 31st St, Chicago, IL 60616</strong>
+                        聚会地点：<strong>2958 S Union Ave, Chicago, IL 60616</strong>
                     </p>
                     <div className="info-button">
-                        <a href="https://www.google.com/maps/place/301+W+31st+St,+Chicago,+IL+60616" target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+                        <a href="https://www.google.com/maps/place/2958+S+Union+Ave,+Chicago,+IL+60616" target="_blank" rel="noopener noreferrer" className="btn btn-primary">
                             查看地图
                         </a>
                     </div>
@@ -264,42 +283,6 @@ export default function Home(): JSX.Element {
         }, 100);
         return () => clearInterval(interval);
     }, []);
-
-/*
-    const updateMargin = () => {
-        const topnav = document.getElementById("nav-main");
-        const home = document.getElementById("home");
-    
-        if (topnav && home) {
-          const navHeight = topnav.offsetHeight; // Get the height of the navbar
-          home.style.marginTop = `${navHeight}px`; // Set margin-top of home to the navbar's height
-        }
-      };
-    
-      useEffect(() => {
-        // Initial update on mount
-        updateMargin();
-    
-        // Get the navbar element
-        const topnav = document.getElementById("nav-main");
-        if (!topnav) return;
-    
-        // Create a ResizeObserver to watch for changes in the navbar's size
-        const resizeObserver = new ResizeObserver(() => {
-          updateMargin();
-        });
-        resizeObserver.observe(topnav);
-    
-        // Also update margin on window resize (for good measure)
-        window.addEventListener("resize", updateMargin);
-    
-        // Clean up when the component unmounts
-        return () => {
-          resizeObserver.disconnect();
-          window.removeEventListener("resize", updateMargin);
-        };
-      }, []);
-*/
 
     return (
     <>

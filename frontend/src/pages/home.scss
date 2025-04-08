@@ -4,68 +4,25 @@ $bg-color: #fff;
 $primary-color: #007bff;
 $shadow-color: #ccc;
 
-/*
-// General styles for the Home component
-#home {
-    background-color: $bg-color;
-    color: $text-color;
-    position: relative;
-
-    .home-content {
-        position: relative;
-        width: 100%;
-        height: 75vh; // Full viewport height
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-
-        .home-bg-image {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            color: #ddd;
-            object-fit: cover;
-            border-radius: 15px;
-            z-index: 0; // Ensure the image is behind the text
-            box-shadow: 0 0 10px 5px $shadow-color;
-        }
-
-        .home-heading {
-            z-index: 1; // Ensure the text is on top of the image
-            color: #fff; // Set text color to white for better contrast
-
-            .heading1 {
-                font-size: 3rem;
-                font-weight: 1000;
-                margin-bottom: 10px;
-            }
-
-            .heading2 {
-                font-size: 2.5rem;
-                line-height: 1.2;
-            }
-        }
-    }
-}
-*/
-
 #slideshow {
 
     .carousel-indicators {
+        position: relative;
+        height: 2rem;
+        justify-content: center;
+        align-items: center;
         gap: 10px;
+        margin-bottom: 0;
 
         .indicator {
             width: 2rem;
-            height: 0.25rem;
-            background-color: #ccc;
+            height: 0.4rem;
+            //border-radius: 50%;
+            background-color: #ddd;
             border: none;
-            cursor: pointer;
     
             &.active {
-                background-color: #333;
+                background-color: #444;
             }
         }
     }
@@ -74,35 +31,49 @@ $shadow-color: #ccc;
         top: 0;
         width: 100%;
         height: 100%;
-        border-radius: 15px;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+        transition: transform 1s ease-in-out;
 
         .carousel-item {
             width: 100%;
             height: 100%;
+
+            .carousel-caption {
+                line-height: 0;
+                margin-bottom: 0;
+                top: 100%;
+                transform: translate(0, -100%);
+                text-shadow: 
+                    -2px -2px 0 black,
+                    2px -2px 0 black,
+                    -2px 2px 0 black,
+                    2px 2px 0 black;
+            }
         }
     }
 
     .slide {
-        height: 45rem;
+        height: 40rem;
 
         @media (min-width: 1200px) and (max-width: 1399px) {
-            height: 38rem;            
+            height: 35rem;
         }
 
         @media (min-width: 992px) and (max-width: 1199px) {
-            height: 32rem;
+            height: 28rem;
         }
 
         @media (min-width: 786px) and (max-width: 991px) {
-            height: 24rem;
+            height: 22rem;
         }
 
         @media (min-width: 576px) and (max-width: 785px) {
-            height: 18rem;
+            height: 16rem;
         }
 
         @media (max-width: 575px) {
-            height: 14rem;
+            height: 12rem;
         }
     }
 
@@ -120,6 +91,10 @@ $shadow-color: #ccc;
         color: #fff;
         font-weight: 600;
         text-align: center;
+
+        @media (max-width: 786px) {
+            font-size: 20px;
+        }
     }
 }
 
@@ -193,6 +168,10 @@ $shadow-color: #ccc;
         margin-bottom: 1rem;
         margin-left: 4rem;
         margin-right: 4rem;
+
+        @media (max-width: 1200px) {
+            margin: 0
+        }
     }
 }
 
