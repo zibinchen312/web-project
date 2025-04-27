@@ -11,7 +11,7 @@ import ssimage from "../images/sundayservice.png";
 
 import pfp from "../images/pfp.png";
 import IIT from "../images/iit_icon.png";
-import UIC from "../images/uic_icon.png";
+import UIC from "../images/uic1_icon.png";
 import UChicago from "../images/uc_icon.png";
 
 // HTML for the Background Image Section //
