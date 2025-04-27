@@ -9,9 +9,10 @@ import "./home.scss";
 import bgimage from "../images/homebg1.png";
 import ssimage from "../images/sundayservice.png";
 
-import campus1Icon from "../images/UIC_icon.png";
-import campus2Icon from "../images/UIC_icon.png";
-import campus3Icon from "../images/UIC_icon.png";
+import pfp from "../images/pfp.png";
+import IIT from "../images/iit_icon.png";
+import UIC from "../images/uic_icon.png";
+import UChicago from "../images/uc_icon.png";
 
 // HTML for the Background Image Section //
 const EventSlider: React.FC = () => {
@@ -137,12 +138,15 @@ const EventSlider: React.FC = () => {
 const InfoSection: React.FC = () => {
     return (
         <section id="info" className="container py-5">
-            <div className="info-content row">
-                <div className="info-image col-md-6">
+            <div className="info-header"> 
+                <h2 className="text-center mb-4 fw-bolder">主日聚会</h2>
+            </div>
+            <div className="info-content row text-center">
+            
+                <div className="info-image col">
                     <img src={ssimage} alt="Sunday Service" className="img-fluid" />
                 </div>
-                <div className="info-text col-md-6">
-                    <h2 className="fw-bolder">主日聚会</h2>
+                <div className="info-text col mt-4">
                     <p>
                         每周日下午四点半，欢迎你来参加我们的主日聚会！
                     </p>
@@ -156,6 +160,100 @@ const InfoSection: React.FC = () => {
                     </div>
                 </div>
             </div>
+        </section>
+    );
+};
+
+// HTML for the Campus Section //
+const CampusSection: React.FC = () => {
+
+    interface CampusData {
+        name: string;
+        president: string;
+        organization: string;
+        phone: string;
+        wechat: string;
+        email: string;
+        image: string;
+    }
+    
+    const campuses: CampusData[] = [
+        {
+            name: "Illinois Institute of Technology (IIT)",
+            president: "Zibin Chen",
+            organization: "Chinese Christians on Campus",
+            phone: "123-456-7890",
+            wechat: "zchen312",
+            email: "zibinchen312@gmail.com",
+            image: IIT,
+        },
+        {
+            name: "University of Illinois at Chicago (UIC)",
+            president: "???",
+            organization: "???",
+            phone: "123-456-7890",
+            wechat: "???",
+            email: "???@gmail.com",
+            image: UIC,
+        },
+        {
+            name: "University of Chicago (UChicago)",
+            president: "Nuanliang Zhu",
+            organization: "???",
+            phone: "123-456-7890",
+            wechat: "???",
+            email: "???@gmail.com",
+            image: UChicago,
+        },
+    ];
+
+    const [selectedCampusIndex, setSelectedCampusIndex] = useState(0);
+    const selectedCampus = campuses[selectedCampusIndex];
+
+    return (
+        <section id="campus" className="container py-5">
+            <h2 className="text-center fw-bolder">校园</h2>
+
+            <div className="campus-info row mb-4">
+                <div className="campus-left col text-center">
+                    <h3>{selectedCampus.name}</h3>
+                </div>
+                <div className="col"></div>
+                <div className="w-100"></div>
+                <div className="campus-left col-3 text-center align-items-center justify-content-center">
+                    <div className="campus-icon-container">
+                        <img src={pfp} alt="UIC Campus" className="campus-icon img-fluid" />
+                        <h4>社长</h4>
+                    </div>
+                </div>
+
+                <div className="campus-middleleft h-100 col-3 my-auto align-items-center justify-content-center">   
+                        <p>社团名称: {selectedCampus.organization}</p>
+                        <p>社长姓名: {selectedCampus.president}</p>
+                        <p>电话: {selectedCampus.phone}</p>
+                        <p>微信: {selectedCampus.wechat}</p>
+                        <p>电子邮箱: {selectedCampus.email}</p>             
+                </div>
+
+                
+                <div className="campus-right col text-center my-auto">
+                    <img src={selectedCampus.image} alt="UIC Campus" className="campus-icon img-fluid w-50" />
+                </div>
+                
+            </div>
+            
+            <div className="university-buttons d-flex justify-content-center align-items-center gap-4">
+                <button className="btn btn-link p-0" onClick={() => setSelectedCampusIndex(0)}>
+                    <img src={IIT} alt="UIC Campus" className="campus-icon img-fluid" style={{ height: "80px" }} />
+                </button>
+                <button className="btn btn-link p-0" onClick={() => setSelectedCampusIndex(1)}>
+                    <img src={UIC} alt="UIC Campus" className="campus-icon img-fluid" style={{ height: "80px" }} />
+                </button>
+                <button className="btn btn-link p-0" onClick={() => setSelectedCampusIndex(2)}>
+                    <img src={UChicago} alt="UIC Campus" className="campus-icon img-fluid" style={{ height: "80px" }} />
+                </button>
+            </div>
+
         </section>
     );
 };
@@ -289,6 +387,8 @@ export default function Home(): JSX.Element {
         <EventSlider />
 
         <InfoSection />
+
+        <CampusSection />
 
         <FaithStatement />
 
