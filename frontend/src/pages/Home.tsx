@@ -8,6 +8,7 @@ import "./home.scss";
 // Import Images //
 import bgimage from "../images/homebg1.png";
 import ssimage from "../images/sundayservice.png";
+import sssimage from "../images/meeting.jpg";
 
 import pfp from "../images/pfp.png";
 import IIT from "../images/iit_icon.png";
@@ -237,7 +238,7 @@ const CampusSection: React.FC = () => {
 
                 
                 <div className="campus-right col text-center my-auto">
-                    <img src={selectedCampus.image} alt="UIC Campus" className="campus-icon img-fluid w-50" />
+                    <img src={sssimage} alt="UIC Campus" className="campus-icon img-fluid rounded" />
                 </div>
                 
             </div>
