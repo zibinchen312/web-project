@@ -40,7 +40,7 @@ const Navbar: React.FC = () => {
         <nav className="navbar navbar-expand-lg navbar-light" id="nav-main">
             <div className="container-fluid">
                 <div className="navbar-brand" id="nav-title" onClick={() => navigate("/")}>
-                    芝加哥人教会
+                    The Church of the Chicagoans
                 </div>
                 <button
                     className="navbar-toggler"
@@ -59,15 +59,19 @@ const Navbar: React.FC = () => {
                         <li className={`nav-item ${isActive("/")}`}>
                             <button className="nav-link" onClick={() => handleLinkClick("/")}>首页</button>
                         </li>
+                        {/*
                         <li className={`nav-item ${isActive("/events")}`}>
                             <button className="nav-link" onClick={() => handleLinkClick("/events")}>活动</button>
                         </li>
+                        */}
                         <li className={`nav-item ${isActive("/articles")}`}>
                             <button className="nav-link" onClick={() => handleLinkClick("/articles")}>信息</button>
                         </li>
+                        {/*
                         <li className={`nav-item ${isActive("/contact")}`}>
                             <button className="nav-link" onClick={() => handleLinkClick("/contact")}>联系我们</button>
                         </li>
+                        */}
                         {!isLoggedIn ? (
                             <li className="nav-item">
                                 <button className="nav-link" onClick={handleLogin}>登录</button>

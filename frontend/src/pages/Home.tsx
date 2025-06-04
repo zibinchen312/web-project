@@ -200,7 +200,7 @@ const CampusSection: React.FC = () => {
         {
             name: "University of Chicago (UChicago)",
             president: "Nuanliang Zhu",
-            organization: "???",
+            organization: "Seers of Divine Revelations",
             phone: "123-456-7890",
             wechat: "???",
             email: "???@gmail.com",
@@ -213,13 +213,18 @@ const CampusSection: React.FC = () => {
 
     return (
         <section id="campus" className="container py-5">
-            <h2 className="text-center fw-bolder">校园</h2>
+            {
+            //<h2 className="text-center fw-bolder">校园</h2>
+            }
 
             <div className="campus-info row mb-4">
+                <h2 className="text-center mb-4 fw-bolder">{selectedCampus.name}</h2>
+                {/*
                 <div className="campus-left col text-center">
-                    <h3>{selectedCampus.name}</h3>
+                    <h2>{selectedCampus.name}</h2>
                 </div>
                 <div className="col"></div>
+*/}
                 <div className="w-100"></div>
                 <div className="campus-left col-3 text-center align-items-center justify-content-center">
                     <div className="campus-icon-container">
@@ -245,7 +250,7 @@ const CampusSection: React.FC = () => {
             
             <div className="university-buttons d-flex justify-content-center align-items-center gap-4">
                 <button className="btn btn-link p-0" onClick={() => setSelectedCampusIndex(0)}>
-                    <img src={IIT} alt="UIC Campus" className="campus-icon img-fluid" style={{ height: "80px" }} />
+                    <img src={IIT} alt="UIC Campus" className="campus-icon img-fluid rounded-circle" style={{ height: "80px" }} />
                 </button>
                 <button className="btn btn-link p-0" onClick={() => setSelectedCampusIndex(1)}>
                     <img src={UIC} alt="UIC Campus" className="campus-icon img-fluid" style={{ height: "80px" }} />

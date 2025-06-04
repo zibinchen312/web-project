@@ -1,24 +1,22 @@
-.article-box {
-    cursor: pointer;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-    max-height: 150px; /* Initial max height */
-}
+#articles-modal {
 
-.article-box.expanded {
-    max-height: 1000px; /* Expand to a large value */
-}
+    height: 500px;
 
-.article-image {
-    max-height: 150px; /* Limit image height */
-    object-fit: cover; /* Maintain aspect ratio */
-}
+    .article-button {
+        font-size: 1.2rem;
+        color: black;
+    }
 
-.article-text {
-    max-height: 150px; /* Limit text height */
-    overflow: hidden; /* Hide overflow */
-}
+    .article-content {
 
-.article-text.expanded {
-    max-height: none; /* remove height limit when expanded */
+        img {
+            width: 100%;
+        }
+
+        p {
+            font-size: 1.2rem;
+        }
+
+    }
+
 }
