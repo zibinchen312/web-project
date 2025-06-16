@@ -12,36 +12,16 @@ import sssimage from "../images/meeting.jpg";
 
 import pfp from "../images/pfp.png";
 import IIT from "../images/iit_icon.png";
+import IITcontact from "../images/iit_wechat.jpg";
 import UIC from "../images/uic1_icon.png";
 import UChicago from "../images/uc_icon.png";
 
 // HTML for the Background Image Section //
 const EventSlider: React.FC = () => {
-    const [events, setEvents] = useState<Article[]>([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
 
-    useEffect(() => {
-        const fetchEvents = async () => {
-          setLoading(true);
-          try {
-            const eventsData = await getArticles();
-            // Assuming eventsData is sorted descending by id,
-            // we only take the first 5 elements.
-            setEvents(eventsData.slice(0, 5));
-          } catch (err: any) {
-            setError(err.message || "Failed to fetch events.");
-          } finally {
-            setLoading(false);
-          }
-        };
-    
-        fetchEvents();
-    }, []);
-
-    const totalSlides = events.length + 1;
+    const totalSlides = 1;
 
     const startInterval = () => {
         if (intervalRef.current) {
@@ -73,40 +53,31 @@ const EventSlider: React.FC = () => {
         startInterval();
     };
 
-    if (loading) {
-        return <div>Loading events...</div>;
-    }
-    
-    if (error) {
-        return <div>{error}</div>;
-    }
-    
-    if (events.length === 0) {
-        return <div>No events available.</div>;
-    }
-
     return (
         <section id="slideshow" className="container">
-            <div className="carousel slide">
+            <div className="carousel">
                 <div className="carousel-inner">
-                    <div className={`carousel-item justify-content-center align-items-center ${currentIndex === 0 ? "active" : ""}`}>
-                        <img className="slide-image" src={bgimage} alt="home" />
-                        <h1 className="home-text">认识基督<br></br>享受祂的丰富</h1>
-                    </div>
-                    {events.map((event, index) => (
-                        <div key={event.id} className={`carousel-item ${index + 1 === currentIndex ? "active" : ""}`}>
-                            <img className="slide-image" src={event.image} alt={event.title} />
-                            <h2 className="carousel-caption">{event.title}</h2>
+                    <div className={`carousel-item ${currentIndex === 0 ? "active" : ""}`}>
+                        <img className="slide-image" src={bgimage} alt="home" style={{ filter: "blur(4px)" }}/>
+                        <div id="image-text">
+                            <h2 className="text-end"><strong className="text-warning">圣经</strong>是我们独一标准</h2>
+                            <p className="text-start">
+                                在芝加哥区为主耶稣基督作见证。我们的信仰是以圣经为独一的标准，承认基督是神的儿子，为人赎罪而死，三日复活，相信这是宇宙间最大的事实。我们的托付是以基督为内涵，以地方上的教会为彰显。
+                                <br/><br/>
+                                为基督身体一的见证，主召集我们来在一起，彼此相爱，交通，扶持，并被建造在使徒和先知的根基上，以基督耶稣为房角石。愿神的爱在这里向人涌动，愿神的旨意成就。
+                            </p>
                         </div>
-                    ))}
+                        
+                    </div>
+                    
                 </div>
 
                 {/* Left and Right Arrow Navigation */}
-                <a className="carousel-control-prev justify-content-start" onClick={toPrevious} style={{ cursor: "pointer"}}>
+                <a className="carousel-control-prev" onClick={toPrevious} style={{ cursor: "pointer" }}>
                     <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span className="visually-hidden">Previous</span>
                 </a>
-                <a className="carousel-control-next justify-content-end" onClick={toNext} style={{ cursor: "pointer" }}>
+                <a className="carousel-control-next" onClick={toNext} style={{ cursor: "pointer" }}>
                     <span className="carousel-control-next-icon" aria-hidden="true"></span>
                     <span className="visually-hidden">Next</span>
                 </a>
@@ -121,16 +92,6 @@ const EventSlider: React.FC = () => {
                     </button>
                 ))}
             </div>
-            
-        {/*
-            <div className="home-content">
-                <img src={bgimage} alt="Church Meeting" className="home-bg-image img-fluid"/>
-                <div className="home-heading">
-                    <h1 className="heading1">认识基督</h1>
-                    <h1 className="heading2">享受祂的丰富</h1>
-                </div>
-            </div>
-        */}
         </section>
     );
 };
@@ -147,18 +108,18 @@ const InfoSection: React.FC = () => {
                 <div className="info-image col">
                     <img src={ssimage} alt="Sunday Service" className="img-fluid" />
                 </div>
-                <div className="info-text col mt-4">
+                <div className="info-text col">
                     <p>
-                        每周日下午四点半，欢迎你来参加我们的主日聚会！
+                        时间：每周日下午4：30 - 6:00 PM
+                        <br />
+                        内容：背经、诗歌、读经
+                        <br />
+                        地点：<a href="https://www.google.com/maps/place/2958+S+Union+Ave,+Chicago,+IL+60616" target="_blank" rel="noopener noreferrer">2958 S Union Ave, Chicago, IL 60616</a>
+                        <br />
+                        电话：<a href="tel:123-456-7890">123-456-7890</a>
+                        <br />
+                        服侍内容：儿童服侍、饭食
                     </p>
-                    <p>
-                        聚会地点：<strong>2958 S Union Ave, Chicago, IL 60616</strong>
-                    </p>
-                    <div className="info-button">
-                        <a href="https://www.google.com/maps/place/2958+S+Union+Ave,+Chicago,+IL+60616" target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-                            查看地图
-                        </a>
-                    </div>
                 </div>
             </div>
         </section>
@@ -169,47 +130,82 @@ const InfoSection: React.FC = () => {
 const CampusSection: React.FC = () => {
 
     interface CampusData {
-        name: string;
-        president: string;
-        organization: string;
+        campus: string;
+        person: string;
+        time: string;
         phone: string;
-        wechat: string;
-        email: string;
-        image: string;
+        wechat?: string;
+        logo?: string;
     }
     
     const campuses: CampusData[] = [
         {
-            name: "Illinois Institute of Technology (IIT)",
-            president: "Zibin Chen",
-            organization: "Chinese Christians on Campus",
+            campus: "Illinois Institute of Technology",
+            person: "Zibin Chen",
+            time: "每周三4:00 PM - 5:00 PM",
             phone: "123-456-7890",
-            wechat: "zchen312",
-            email: "zibinchen312@gmail.com",
-            image: IIT,
+            wechat: IITcontact,
+            logo: IIT,
         },
         {
-            name: "University of Illinois at Chicago (UIC)",
-            president: "???",
-            organization: "???",
+            campus: "UIC",
+            person: "？？？",
+            time: "？？？",
             phone: "123-456-7890",
-            wechat: "???",
-            email: "???@gmail.com",
-            image: UIC,
+            wechat: "？？？",
+            logo: UIC,
         },
         {
-            name: "University of Chicago (UChicago)",
-            president: "Nuanliang Zhu",
-            organization: "Seers of Divine Revelations",
+            campus: "University of Chicago",
+            person: "Nuanliang Zhu",
+            time: "每周五4:00 PM - 5:00 PM",
             phone: "123-456-7890",
-            wechat: "???",
-            email: "???@gmail.com",
-            image: UChicago,
+            wechat: "？？？",
+            logo: UChicago,
         },
     ];
 
     const [selectedCampusIndex, setSelectedCampusIndex] = useState(0);
     const selectedCampus = campuses[selectedCampusIndex];
+
+    const [selectedWechatModal, setSelectedWechatModal] = useState<string | null>(null);
+
+    // State for the Carousel    
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+    // Total number of slides in the carousel (have to set manually)
+    const totalSlides = 3;
+
+    const startInterval = () => {
+        if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+        }
+        intervalRef.current = setInterval(() => {
+            setCurrentIndex((prevIndex) => (prevIndex + 1) % totalSlides);
+        }, 20000)
+    };
+
+    useEffect(() => {
+        if (totalSlides > 0) {
+            startInterval();
+        }
+        return () => {
+            if (intervalRef.current !== null) {
+                clearInterval(intervalRef.current);
+            }
+        }
+    }, [totalSlides]);
+    
+    const toPrevious = () => {
+        setCurrentIndex((prevIndex) => (prevIndex === 0 ? totalSlides - 1 : prevIndex - 1));
+        startInterval();
+    };
+
+    const toNext = () => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % totalSlides);
+        startInterval();
+    };
 
     return (
         <section id="campus" className="container py-5">
@@ -218,47 +214,80 @@ const CampusSection: React.FC = () => {
             }
 
             <div className="campus-info row mb-4">
-                <h2 className="text-center mb-4 fw-bolder">{selectedCampus.name}</h2>
+                <h2 className="text-center mb-4 fw-bolder">各个区的聚会</h2>
                 {/*
                 <div className="campus-left col text-center">
                     <h2>{selectedCampus.name}</h2>
                 </div>
                 <div className="col"></div>
 */}
-                <div className="w-100"></div>
-                <div className="campus-left col-3 text-center align-items-center justify-content-center">
-                    <div className="campus-icon-container">
-                        <img src={pfp} alt="UIC Campus" className="campus-icon img-fluid" />
-                        <h4>社长</h4>
+                <div className="campus-left col text-center align-items-center justify-content-center">
+                    <div className="campus-contacts">
+                        <h5>{selectedCampus.campus}</h5>
+                        <p className="text-center">
+                            联系人: {selectedCampus.person}
+                            <br />
+                            时间：{selectedCampus.time}
+                            <br />
+                            电话: <a href={`tel:${selectedCampus.phone}`}>{selectedCampus.phone}</a>
+                            <br />
+                            微信: 
+                            <button className="btn btn-link p-0" onClick={() => setSelectedWechatModal(selectedCampus.wechat ?? null)}>
+                                <i className="bi bi-box-arrow-in-up-right"></i>
+                            </button>
+                        </p>
+                        <div className="university-buttons d-flex justify-content-center align-items-center gap-4">
+                            <button className="btn btn-link p-0" onClick={() => setSelectedCampusIndex(0)}>
+                                <img src={IIT} alt="UIC Campus" className="campus-icon img-fluid rounded-circle" style={{ height: "80px" }} />
+                            </button>
+                            <button className="btn btn-link p-0" onClick={() => setSelectedCampusIndex(1)}>
+                                <img src={UIC} alt="UIC Campus" className="campus-icon img-fluid" style={{ height: "80px" }} />
+                            </button>
+                            <button className="btn btn-link p-0" onClick={() => setSelectedCampusIndex(2)}>
+                                <img src={UChicago} alt="UIC Campus" className="campus-icon img-fluid" style={{ height: "80px" }} />
+                            </button>
+                        </div>
                     </div>
                 </div>
 
-                <div className="campus-middleleft h-100 col-3 my-auto align-items-center justify-content-center">   
-                        <p>社团名称: {selectedCampus.organization}</p>
-                        <p>社长姓名: {selectedCampus.president}</p>
-                        <p>电话: {selectedCampus.phone}</p>
-                        <p>微信: {selectedCampus.wechat}</p>
-                        <p>电子邮箱: {selectedCampus.email}</p>             
-                </div>
-
-                
                 <div className="campus-right col text-center my-auto">
-                    <img src={sssimage} alt="UIC Campus" className="campus-icon img-fluid rounded" />
+                    <div id="campusCarousel" className="carousel slide" data-bs-ride="carousel">
+                        <div className="carousel-inner">
+                            <div className={`carousel-item ${currentIndex === 0 ? "active" : ""}`}>
+                                <img src={sssimage} alt="IIT Campus" className="d-block w-100 rounded" />
+                            </div>
+                            <div className={`carousel-item ${currentIndex === 1 ? "active" : ""}`}>
+                                <img src={ssimage} alt="UIC Campus" className="d-block w-100 rounded" />
+                            </div>
+                            <div className={`carousel-item ${currentIndex === 2 ? "active" : ""}`}>
+                                <img src={bgimage} alt="UChicago Campus" className="d-block w-100 rounded" />
+                            </div>
+                        </div>
+                        <button className="carousel-control-prev" onClick={toPrevious}>
+                            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                        </button>
+                        <button className="carousel-control-next" onClick={toNext}>
+                            <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                        </button>
+                    </div>
                 </div>
-                
             </div>
-            
-            <div className="university-buttons d-flex justify-content-center align-items-center gap-4">
-                <button className="btn btn-link p-0" onClick={() => setSelectedCampusIndex(0)}>
-                    <img src={IIT} alt="UIC Campus" className="campus-icon img-fluid rounded-circle" style={{ height: "80px" }} />
-                </button>
-                <button className="btn btn-link p-0" onClick={() => setSelectedCampusIndex(1)}>
-                    <img src={UIC} alt="UIC Campus" className="campus-icon img-fluid" style={{ height: "80px" }} />
-                </button>
-                <button className="btn btn-link p-0" onClick={() => setSelectedCampusIndex(2)}>
-                    <img src={UChicago} alt="UIC Campus" className="campus-icon img-fluid" style={{ height: "80px" }} />
-                </button>
-            </div>
+
+            {selectedWechatModal && (
+                <div className="modal fade show d-block" tabIndex={-1} role="dialog" style={{ backgroundColor: "rgba(0,0,0,0.5)" }}>
+                    <div className="modal-dialog modal-sm" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">微信二维码</h5>
+                                <button type="button" className="btn-close" onClick={() => setSelectedWechatModal(null)}></button>
+                            </div>
+                            <div className="modal-body">
+                                <img src={selectedWechatModal} alt="Wechat QR Code" className="img-fluid" style={{ zoom: "150%" }}/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
 
         </section>
     );
@@ -396,9 +425,9 @@ export default function Home(): JSX.Element {
 
         <CampusSection />
 
-        <FaithStatement />
+        {/* <FaithStatement /> */}
 
-        <ContactForm />
+        {/* <ContactForm /> */}
     </>
     );
 }
