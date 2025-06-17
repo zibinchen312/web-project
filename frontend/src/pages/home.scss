@@ -3,6 +3,7 @@ $text-color: #333;
 $bg-color: #fff;
 $primary-color: #007bff;
 $shadow-color: #ccc;
+$p-font-size: clamp(0.8rem, 2vw, 1.2rem);
 
 #slideshow {
 
@@ -13,16 +14,17 @@ $shadow-color: #ccc;
         align-items: center;
         gap: 10px;
         margin-bottom: 0;
+        transform: translateY(-100%);
 
         .indicator {
             width: 2rem;
             height: 0.4rem;
             //border-radius: 50%;
-            background-color: #ddd;
+            background-color: #ccc;
             border: none;
     
             &.active {
-                background-color: #444;
+                background-color: #aaa;
             }
         }
     }
@@ -34,6 +36,7 @@ $shadow-color: #ccc;
         border-bottom-left-radius: 15px;
         border-bottom-right-radius: 15px;
         transition: transform 1s ease-in-out;
+        box-shadow: 0 0 10px 5px $shadow-color;
 
         .carousel-item {
             width: 100%;
@@ -45,6 +48,7 @@ $shadow-color: #ccc;
         width: 100%;
         height: 100%;
         object-fit: cover;
+        box-shadow: 0 0 10px 5px $shadow-color;
     }
 
     #image-text {
@@ -92,51 +96,71 @@ $shadow-color: #ccc;
         display: flex;
         flex-wrap: wrap;
         justify-content: center; // Center the entire container
+    }
 
-        @media (max-width: 768px) {
-            flex-direction: column;
+    .info-image {
+        img {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 0 10px 5px $shadow-color;
         }
+    }
 
-        .info-text, .info-image {
-            display: flex;
+    .info-text {
+        align-self: center;
+
+        p {
+            margin: 0;
+            font-size: $p-font-size;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .info-content {
             flex-direction: column;
-            align-items: center; // Center content within each column
-            justify-content: center; // Center content vertically
-            flex: 1;
         }
 
         .info-text {
-            h2 {
-                margin-bottom: 20px;
-            }
+            padding-top: 20px;
             p {
-                margin: 0;
-                line-height: 1.6;
-                text-align: center; // Center text within the column
-            }
-            strong {
-                color: $primary-color;
-            }
-            .info-button {
-                margin-top: 20px;
+                font-size: 1rem;
             }
         }
-
-        .info-image {
-            img {
-                width: 100%;
-                height: auto;
-                display: block;
-                border-radius: 15px;
-                box-shadow: 0 0 10px 5px $shadow-color;
-            }
-        }
+        
     }
 }
 
 #campus {
+    .campus-left {
+        align-self: center;
+    }
 
-    #campusCarousel {
+    .campus-contacts {
+        p {
+            font-size: $p-font-size;
+            margin: 0;
+        }
+    }
+
+    .campus-indicators {
+        padding-top: clamp(5px, 1vw, 20px);
+
+        .campus-btn {
+            &.active {
+                .campus-icon {
+                    outline: 0.2rem solid #333;
+                }
+            }
+        }
+
+        .campus-icon {
+            width: clamp(25px, 5vw, 80px);
+            height: clamp(25px, 5vw, 80px);
+        }
+    }
+
+    .campus-carousel {
         .carousel-control-next, .carousel-control-prev {
             width: 5%;
             opacity: 0.7;
@@ -146,47 +170,24 @@ $shadow-color: #ccc;
             }
         }
     }
-}
 
-#statement-of-faith {
-    background-color: $bg-color;
-    color: $text-color;
-    padding: 20px;
-    text-align: center;
+    @media (max-width: 576px) {
+        .campus-info {
+            flex-direction: column-reverse;
 
-    .description {
-        font-size: 1rem;
-    }
-
-    h2 {
-        margin-bottom: 20px;
-    }
-
-    p {
-        line-height: 1.6;
-        margin-bottom: 1rem;
-        margin-left: 4rem;
-        margin-right: 4rem;
-
-        @media (max-width: 1200px) {
-            margin: 0
-        }
-    }
-}
-
-// Responsive adjustments
-@media (max-width: 768px) {
-    #home,
-    #info {
-        padding: 10px;
-    }
-
-    #info {
-        .info-content {
-            .info-text,
-            .info-image {
-                width: 100%;
+            .campus-contacts {
+                p {
+                    font-size: 1rem;
+                }
+                .campus-icon {
+                    width: 40px;
+                    height: 40px;
+                }
             }
+        }
+
+        .campus-left {
+            padding-top: 20px;
         }
     }
 }

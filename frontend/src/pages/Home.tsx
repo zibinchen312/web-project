@@ -54,7 +54,7 @@ const EventSlider: React.FC = () => {
     };
 
     return (
-        <section id="slideshow" className="container">
+        <section id="slideshow" className="container pb-5">
             <div className="carousel">
                 <div className="carousel-inner">
                     <div className={`carousel-item ${currentIndex === 0 ? "active" : ""}`}>
@@ -83,11 +83,12 @@ const EventSlider: React.FC = () => {
                 </a>
             </div>
             <div className="carousel-indicators">
-                {Array.from({ length: totalSlides }).map((_, idx) => (
+                {[...Array(totalSlides)].map((_, index) => (
                     <button
-                        key={idx}
-                        className={`indicator ${idx === currentIndex ? "active" : ""}`}
-                        onClick={() => setCurrentIndex(idx)}
+                        key={index}
+                        type="button"
+                        className={`indicator ${index === currentIndex ? "active" : ""}`}
+                        onClick={() => setCurrentIndex(index)}
                     >
                     </button>
                 ))}
@@ -183,7 +184,7 @@ const CampusSection: React.FC = () => {
         }
         intervalRef.current = setInterval(() => {
             setCurrentIndex((prevIndex) => (prevIndex + 1) % totalSlides);
-        }, 20000)
+        }, 10000)
     };
 
     useEffect(() => {
@@ -212,9 +213,9 @@ const CampusSection: React.FC = () => {
             {
             //<h2 className="text-center fw-bolder">校园</h2>
             }
-
-            <div className="campus-info row mb-4">
-                <h2 className="text-center mb-4 fw-bolder">各个区的聚会</h2>
+            <h2 className="text-center mb-4 fw-bolder">各个区的聚会</h2>
+            <div className="campus-info row">
+                
                 {/*
                 <div className="campus-left col text-center">
                     <h2>{selectedCampus.name}</h2>
@@ -223,8 +224,8 @@ const CampusSection: React.FC = () => {
 */}
                 <div className="campus-left col text-center align-items-center justify-content-center">
                     <div className="campus-contacts">
-                        <h5>{selectedCampus.campus}</h5>
-                        <p className="text-center">
+                        <p className="fw-bolder">{selectedCampus.campus}</p>
+                        <p>
                             联系人: {selectedCampus.person}
                             <br />
                             时间：{selectedCampus.time}
@@ -236,22 +237,22 @@ const CampusSection: React.FC = () => {
                                 <i className="bi bi-box-arrow-in-up-right"></i>
                             </button>
                         </p>
-                        <div className="university-buttons d-flex justify-content-center align-items-center gap-4">
-                            <button className="btn btn-link p-0" onClick={() => setSelectedCampusIndex(0)}>
-                                <img src={IIT} alt="UIC Campus" className="campus-icon img-fluid rounded-circle" style={{ height: "80px" }} />
+                        <div className="campus-indicators d-flex justify-content-center align-items-center gap-4">
+                            <button className={`campus-btn btn btn-link p-0 ${selectedCampusIndex === 0 ? "active" : ""}`} onClick={() => setSelectedCampusIndex(0)}>
+                                <img src={IIT} alt="UIC Campus" className="campus-icon img-fluid rounded-circle"/>
                             </button>
-                            <button className="btn btn-link p-0" onClick={() => setSelectedCampusIndex(1)}>
-                                <img src={UIC} alt="UIC Campus" className="campus-icon img-fluid" style={{ height: "80px" }} />
+                            <button className={`campus-btn btn btn-link p-0 ${selectedCampusIndex === 1 ? "active" : ""}`} onClick={() => setSelectedCampusIndex(1)}>
+                                <img src={UIC} alt="UIC Campus" className="campus-icon img-fluid rounded-circle"/>
                             </button>
-                            <button className="btn btn-link p-0" onClick={() => setSelectedCampusIndex(2)}>
-                                <img src={UChicago} alt="UIC Campus" className="campus-icon img-fluid" style={{ height: "80px" }} />
+                            <button className={`campus-btn btn btn-link p-0 ${selectedCampusIndex === 2 ? "active" : ""}`} onClick={() => setSelectedCampusIndex(2)}>
+                                <img src={UChicago} alt="UIC Campus" className="campus-icon img-fluid rounded-circle"/>
                             </button>
                         </div>
                     </div>
                 </div>
 
                 <div className="campus-right col text-center my-auto">
-                    <div id="campusCarousel" className="carousel slide" data-bs-ride="carousel">
+                    <div className="campus-carousel carousel slide" data-bs-ride="carousel">
                         <div className="carousel-inner">
                             <div className={`carousel-item ${currentIndex === 0 ? "active" : ""}`}>
                                 <img src={sssimage} alt="IIT Campus" className="d-block w-100 rounded" />
@@ -271,6 +272,7 @@ const CampusSection: React.FC = () => {
                         </button>
                     </div>
                 </div>
+                
             </div>
 
             {selectedWechatModal && (
@@ -292,30 +294,6 @@ const CampusSection: React.FC = () => {
         </section>
     );
 };
-
-// HTML for the Statement of Faith Section //
-const FaithStatement: React.FC = () => {
-    return (
-        <section id="statement-of-faith" className="container py-5">
-            <h2 className="text-center mb-4 fw-bolder">信仰宣言</h2>
-            <p className="description text-start">
-                圣经是我们的信仰宣言。我们的盼望是进入圣经向我们启示的一切，使我们明白神对世界、对教会以及对我们个人基督徒生活的旨意。
-            </p>
-            <p className="description text-start">
-                我们确实相信正统基督教信仰的基本要点：神是三一的—父、子、圣灵；神的儿子自永远与父同在，并由童女所生，成为肉身，成为人—耶稣基督。祂过了无罪的生活，为了我们的救赎死在十字架上，并在第三日从死里复活，且如今在神的右边，等候祂再来，在地上建立祂的国度。
-            </p>
-            <p className="description text-start">
-                这些是信仰的基本要点，是所有真正的基督徒必须持守的基本信仰。然而，若我们超越这些要点，制定一套关于我们特定信念的信条，我们可能会无意间、不必要地与其他信徒分隔开来。
-            </p>
-            <p className="description text-start">
-                当我们一同站立在基督里，圣灵将引导我们进入一切的真理（约翰福音16:13）。当我们在基督里成长，我们终将清楚地明白自己当持守的信仰：
-            </p>
-            <p className="description text-start">
-                “直等到我们众人在真道上同归于一，认识神的儿子，得以长大成人，满有基督长成的身量，使我们不再作小孩子，中了人的诡计和欺骗的法术，被一切异教之风摇动，飘来飘去，就随从各样的异端；惟用爱心说诚实话，凡事长进，连于元首基督。” ——以弗所书 4:13-15
-            </p>
-        </section>
-    );
-}
 
 // HTML for the Contact Form Section //
 const ContactForm: React.FC = () => {
