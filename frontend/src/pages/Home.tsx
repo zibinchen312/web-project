@@ -255,13 +255,13 @@ const CampusSection: React.FC = () => {
                     <div className="campus-carousel carousel slide" data-bs-ride="carousel">
                         <div className="carousel-inner">
                             <div className={`carousel-item ${currentIndex === 0 ? "active" : ""}`}>
-                                <img src={sssimage} alt="IIT Campus" className="d-block w-100 rounded" />
+                                <img src={sssimage} alt="IIT Campus" className="img-fluid" />
                             </div>
                             <div className={`carousel-item ${currentIndex === 1 ? "active" : ""}`}>
-                                <img src={ssimage} alt="UIC Campus" className="d-block w-100 rounded" />
+                                <img src={ssimage} alt="UIC Campus" className="img-fluid" />
                             </div>
                             <div className={`carousel-item ${currentIndex === 2 ? "active" : ""}`}>
-                                <img src={bgimage} alt="UChicago Campus" className="d-block w-100 rounded" />
+                                <img src={bgimage} alt="UChicago Campus" className="img-fluid" />
                             </div>
                         </div>
                         <button className="carousel-control-prev" onClick={toPrevious}>

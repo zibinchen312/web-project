@@ -171,6 +171,11 @@ $p-font-size: clamp(0.8rem, 2vw, 1.2rem);
         }
     }
 
+    .carousel-inner {
+        border-radius: 15px;
+        box-shadow: 0 0 10px 5px $shadow-color;
+    }
+
     @media (max-width: 576px) {
         .campus-info {
             flex-direction: column-reverse;
