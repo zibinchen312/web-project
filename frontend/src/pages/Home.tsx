@@ -100,16 +100,21 @@ const EventSlider: React.FC = () => {
 // HTML for the Info Section //
 const InfoSection: React.FC = () => {
     return (
-        <section id="info" className="container py-5">
+        <section id="info" className="container pb-5">
+            {/*
             <div className="info-header"> 
                 <h2 className="text-center mb-4 fw-bolder">主日聚会</h2>
             </div>
+            */}
             <div className="info-content row text-center">
             
                 <div className="info-image col">
                     <img src={ssimage} alt="Sunday Service" className="img-fluid" />
                 </div>
                 <div className="info-text col">
+                    <h2 className="text-center m-0 fw-bolder">
+                        主日聚会
+                    </h2>
                     <p>
                         时间：每周日下午4：30 - 6:00 PM
                         <br />
@@ -117,7 +122,7 @@ const InfoSection: React.FC = () => {
                         <br />
                         地点：<a href="https://www.google.com/maps/place/2958+S+Union+Ave,+Chicago,+IL+60616" target="_blank" rel="noopener noreferrer">2958 S Union Ave, Chicago, IL 60616</a>
                         <br />
-                        电话：<a href="tel:123-456-7890">123-456-7890</a>
+                        电话：<a href="tel:732-310-2214">732-310-2214</a>
                         <br />
                         服侍内容：儿童服侍、饭食
                     </p>
@@ -142,23 +147,23 @@ const CampusSection: React.FC = () => {
     const campuses: CampusData[] = [
         {
             campus: "Illinois Institute of Technology",
-            person: "Zibin Chen",
+            person: "陈梓彬",
             time: "每周三4:00 PM - 5:00 PM",
-            phone: "123-456-7890",
+            phone: "312-998-3838",
             wechat: IITcontact,
             logo: IIT,
         },
         {
-            campus: "UIC",
-            person: "？？？",
+            campus: "University of Illinois at Chicago",
+            person: "张威棣",
             time: "？？？",
-            phone: "123-456-7890",
+            phone: "732-310-2214",
             wechat: "？？？",
             logo: UIC,
         },
         {
             campus: "University of Chicago",
-            person: "Nuanliang Zhu",
+            person: "朱暖凉",
             time: "每周五4:00 PM - 5:00 PM",
             phone: "123-456-7890",
             wechat: "？？？",
@@ -209,11 +214,7 @@ const CampusSection: React.FC = () => {
     };
 
     return (
-        <section id="campus" className="container py-5">
-            {
-            //<h2 className="text-center fw-bolder">校园</h2>
-            }
-            <h2 className="text-center mb-4 fw-bolder">各个区的聚会</h2>
+        <section id="campus" className="container pb-5">
             <div className="campus-info row">
                 
                 {/*
@@ -223,6 +224,7 @@ const CampusSection: React.FC = () => {
                 <div className="col"></div>
 */}
                 <div className="campus-left col text-center align-items-center justify-content-center">
+                    <h2 className="text-center fw-bolder">各个区的聚会</h2>
                     <div className="campus-contacts">
                         <p className="fw-bolder">{selectedCampus.campus}</p>
                         <p>

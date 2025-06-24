@@ -3,13 +3,14 @@ $text-color: #333;
 $bg-color: #fff;
 $primary-color: #007bff;
 $shadow-color: #ccc;
-$p-font-size: clamp(0.8rem, 2vw, 1.2rem);
+$h-font-size: clamp(1.2rem, 3vw, 2rem);
+$p-font-size: clamp(0.8rem, 1.5vw, 1.2rem);
 
 #slideshow {
 
     .carousel-indicators {
         position: relative;
-        height: 2rem;
+        height: clamp(0.8rem, 2vw, 2rem);
         justify-content: center;
         align-items: center;
         gap: 10px;
@@ -18,7 +19,7 @@ $p-font-size: clamp(0.8rem, 2vw, 1.2rem);
 
         .indicator {
             width: 2rem;
-            height: 0.4rem;
+            height: clamp(0.05rem, 0.5vw, 0.4rem);
             //border-radius: 50%;
             background-color: #ccc;
             border: none;
@@ -99,6 +100,8 @@ $p-font-size: clamp(0.8rem, 2vw, 1.2rem);
     }
 
     .info-image {
+        align-self: center;
+
         img {
             width: 100%;
             height: auto;
@@ -109,7 +112,9 @@ $p-font-size: clamp(0.8rem, 2vw, 1.2rem);
 
     .info-text {
         align-self: center;
-
+        h2 {
+            font-size: $h-font-size;
+        }
         p {
             margin: 0;
             font-size: $p-font-size;
@@ -118,11 +123,14 @@ $p-font-size: clamp(0.8rem, 2vw, 1.2rem);
     
     @media (max-width: 576px) {
         .info-content {
-            flex-direction: column;
+            flex-direction: column-reverse;
         }
 
         .info-text {
-            padding-top: 20px;
+            padding-bottom: 20px;
+            h2 {
+                padding-bottom: 5px;
+            }
             p {
                 font-size: 1rem;
             }
@@ -134,6 +142,10 @@ $p-font-size: clamp(0.8rem, 2vw, 1.2rem);
 #campus {
     .campus-left {
         align-self: center;
+
+        h2 {
+            font-size: $h-font-size;
+        }
     }
 
     .campus-contacts {
@@ -178,7 +190,7 @@ $p-font-size: clamp(0.8rem, 2vw, 1.2rem);
 
     @media (max-width: 576px) {
         .campus-info {
-            flex-direction: column-reverse;
+            flex-direction: column;
 
             .campus-contacts {
                 p {
@@ -192,7 +204,13 @@ $p-font-size: clamp(0.8rem, 2vw, 1.2rem);
         }
 
         .campus-left {
-            padding-top: 20px;
+            padding-top: 5px;
+            padding-bottom: 20px;
         }
     }
+}
+
+.header {
+    font-size: clamp(1.2rem, 3vw, 2rem) !important;
+    font-weight: bolder
 }

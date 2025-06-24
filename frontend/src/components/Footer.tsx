@@ -9,7 +9,7 @@ const Footer: React.FC = () => {
                 <div className="footer-info">
                     <h3 className="footer-title">The Church of the Chicagoans</h3>
                     <p>5518 W Gettysburg St, Chicago, IL 60630, USA</p>
-                    <p>Phone: (123) 456-7890</p>
+                    <p>Phone: 732-310-2214</p>
                     <p>Email: thechurchofthechicagoans@gmail.com</p>
                 </div>
                 <div className="footer-bottom text-center">
