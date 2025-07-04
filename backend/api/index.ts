@@ -1,9 +1,10 @@
 import 'dotenv/config';
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
+import path from 'path';
 import bodyParser from 'body-parser';
 import { createClient } from '@supabase/supabase-js';
-import { Server } from 'http';
+import { createServer } from 'http';
 import { Server as SocketIOServer } from 'socket.io';
 
 import userRoutes from './routes/userRoute';
@@ -61,7 +62,7 @@ const isPublic = false;
 createBucket(bucketName, isPublic);
 
 // Set up Socket.io
-const httpServer: Server = require('http').createServer(app);
+const httpServer = createServer(app);
 const io = new SocketIOServer(httpServer, {
     cors: {
         origin: allowedOrigins,
@@ -82,6 +83,13 @@ io.on('connection', (socket: any) => {
             socket.to(sendUserSocket).emit('receive-msg', data.message);
         }
     });
+});
+
+// Serve frontend static files
+const frontendBuildPath = path.join(__dirname, '../../frontend/build');
+app.use(express.static(frontendBuildPath));
+app.get('*', (req: Request, res: Response) => {
+    res.sendFile(path.join(frontendBuildPath, 'index.html'));
 });
 
 // Mount API routes

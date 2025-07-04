@@ -1,0 +1,12 @@
+{
+  "name": "web-project",
+  "private": true,
+  "workspaces": ["frontend", "backend"],
+  "scripts": {
+    "heroku-postbuild": "npm run build --workspace frontend && npm run build --workspace backend",
+    "start:prod": "node backend/dist/index.js"
+  },
+  "engines": {
+    "node": "20.x"
+  }
+}
