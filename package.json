@@ -4,22 +4,34 @@
   "private": true,
   "dependencies": {
     "@types/axios": "^0.14.4",
+    "@vitejs/plugin-react": "^4.6.0",
     "axios": "^1.7.9",
+    "body-parser": "^2.2.0",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.13.1",
+    "concurrently": "^9.2.0",
     "cra-template-typescript": "1.2.0",
+    "dotenv": "^17.0.1",
+    "express": "^5.1.0",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.1.10",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router": "^7.1.5",
     "react-router-dom": "^7.1.5",
     "react-scripts": "^5.0.1",
+    "vite": "^7.0.1",
     "web-vitals": "^4.2.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "dev2": "concurrently \"vite build --watch\" \"nodemon server/server.js\"",
+    "dev3": "NODE_ENV=development node server/index.js",
+    "build2": "vite build",
+    "proc": "node "
   },
   "eslintConfig": {
     "extends": [

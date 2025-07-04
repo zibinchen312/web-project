@@ -6,15 +6,15 @@ import { sendMessage, SendMessageResponse, getArticles, Article } from "../api/i
 import "./home.scss";
 
 // Import Images //
-import bgimage from "../images/homebg1.png";
-import ssimage from "../images/sundayservice.png";
-import sssimage from "../images/meeting.jpg";
+import bgimage from "/assets/homebg1.png";
+import ssimage from "/assets/sundayservice.png";
+import sssimage from "/assets/meeting.jpg";
 
-import pfp from "../images/pfp.png";
-import IIT from "../images/iit_icon.png";
-import IITcontact from "../images/iit_wechat.jpg";
-import UIC from "../images/uic1_icon.png";
-import UChicago from "../images/uc_icon.png";
+import pfp from "/assets/pfp.png";
+import IIT from "/assets/iit_icon.png";
+import IITcontact from "/assets/iit_wechat.jpg";
+import UIC from "/assets/uic1_icon.png";
+import UChicago from "/assets/uc_icon.png";
 
 // HTML for the Background Image Section //
 const EventSlider: React.FC = () => {
