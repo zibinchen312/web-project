@@ -3,7 +3,7 @@
   "private": true,
   "workspaces": ["frontend", "backend"],
   "scripts": {
-    "heroku-postbuild": "npm run build --workspace frontend && npm run build --workspace backend",
+    "heroku-postbuild": "npm install --workspace frontend && npm install --workspace backend && npm run build --workspace frontend && npm run build --workspace backend",
     "start:prod": "node backend/dist/index.js"
   },
   "engines": {
