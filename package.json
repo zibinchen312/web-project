@@ -1,17 +1,16 @@
 {
   "name": "web-project",
   "private": true,
-  "workspaces": [
-    "frontend",
-    "backend"
-  ],
   "scripts": {
-    "heroku-postbuild": "npm install --workspace frontend && npm install --workspace backend && npm run build --workspace frontend && npm run build --workspace backend",
+    "heroku-postbuild": "cd frontend && npm install && npm run build && cd ../backend && npm install && npm run build",
     "start:prod": "node backend/dist/index.js"
   },
   "engines": {
     "node": "20.x",
     "npm": "10.x"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
   },
   "devDependencies": {
     "@types/jest": "^30.0.0"
