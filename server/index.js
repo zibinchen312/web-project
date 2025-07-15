@@ -20,6 +20,8 @@ app.use(parser.json());
 app.use(parser.urlencoded({ extended: true }));
 // app.use("/assets", express.static(path.join(__dirname, "../assets")));
 
+console.log(isProd, " prod");
+
 if (!isProd) {
   const vite = await createServer({
     server: { middlewareMode: true },

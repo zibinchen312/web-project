@@ -27,7 +27,8 @@
     "dev2": "concurrently \"vite build --watch\" \"nodemon server/index.js\"",
     "start": "nodemon server/index.js",
     "dev3": "NODE_ENV=development node server/index.js",
-    "build2": "vite build",
+    "build": "vite build",
+    "heroku-postbuild": "npm run build",
     "proc": "node server/index.js"
   },
   "eslintConfig": {
