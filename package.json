@@ -28,7 +28,7 @@
     "start": "nodemon server/index.js",
     "dev3": "NODE_ENV=development node server/index.js",
     "build2": "vite build",
-    "proc": "node "
+    "proc": "node server/index.js"
   },
   "eslintConfig": {
     "extends": [
