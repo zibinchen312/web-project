@@ -6,12 +6,13 @@ import React, { JSX, useEffect, useState, useRef } from "react";
 import "./home.scss";
 
 // Import Images //
-
-// import pfp from "/assets/pfp.png";
-// import IIT from "/assets/iit_icon.png";
-// import IITcontact from "/assets/iit_wechat.jpg";
-// import UIC from "/assets/uic1_icon.png";
-// import UChicago from "/assets/uc_icon.png";
+import homebg  from "../../assets/homebg1.png";
+import sundayservice from "../../assets/sundayservice.png";
+import meeting from "../../assets/meeting.jpg";
+import IIT from "../../assets/iit_icon.png";
+import IITcontact from "../../assets/iit_wechat.jpg";
+import UIC from "../../assets/uic1_icon.png";
+import UChicago from "../../assets/uc_icon.png";
 
 // HTML for the Background Image Section //
 const EventSlider: React.FC = () => {
@@ -62,7 +63,7 @@ const EventSlider: React.FC = () => {
           >
             <img
               className='slide-image'
-              src={"/assets/homebg1.png"}
+              src={homebg}
               alt='home'
               style={{ filter: "blur(4px)" }}
             />
@@ -130,7 +131,7 @@ const InfoSection: React.FC = () => {
       <div className='info-content row text-center'>
         <div className='info-image col'>
           <img
-            src={"/assetes/sundayservice.png"}
+            src={sundayservice}
             alt='Sunday Service'
             className='img-fluid'
           />
@@ -178,8 +179,8 @@ const CampusSection: React.FC = () => {
       person: "陈梓彬",
       time: "每周三4:00 PM - 5:00 PM",
       phone: "312-998-3838",
-      wechat: "/assets/iit_wechat.jpg",
-      logo: "/assets/iit_icon.png",
+      wechat: IITcontact,
+      logo: IIT,
     },
     {
       campus: "University of Illinois at Chicago",
@@ -187,7 +188,7 @@ const CampusSection: React.FC = () => {
       time: "？？？",
       phone: "732-310-2214",
       wechat: "？？？",
-      logo: "/assets/uic1_icon.png",
+      logo: UIC,
     },
     {
       campus: "University of Chicago",
@@ -195,7 +196,7 @@ const CampusSection: React.FC = () => {
       time: "每周五4:00 PM - 5:00 PM",
       phone: "123-456-7890",
       wechat: "？？？",
-      logo: "/assets/uc_icon.png",
+      logo: UChicago,
     },
   ];
 
@@ -284,7 +285,7 @@ const CampusSection: React.FC = () => {
                 onClick={() => setSelectedCampusIndex(0)}
               >
                 <img
-                  src={"/assets/iit_icon.png"}
+                  src={IIT}
                   alt='UIC Campus'
                   className='campus-icon img-fluid rounded-circle'
                 />
@@ -296,7 +297,7 @@ const CampusSection: React.FC = () => {
                 onClick={() => setSelectedCampusIndex(1)}
               >
                 <img
-                  src={"/assets/uic1_icon.png"}
+                  src={UIC}
                   alt='UIC Campus'
                   className='campus-icon img-fluid rounded-circle'
                 />
@@ -308,7 +309,7 @@ const CampusSection: React.FC = () => {
                 onClick={() => setSelectedCampusIndex(2)}
               >
                 <img
-                  src={"/assets/uc_icon.png"}
+                  src={UChicago}
                   alt='UIC Campus'
                   className='campus-icon img-fluid rounded-circle'
                 />
@@ -329,7 +330,7 @@ const CampusSection: React.FC = () => {
                 }`}
               >
                 <img
-                  src={"/assets/meeting.jpg"}
+                  src={meeting}
                   alt='IIT Campus'
                   className='img-fluid'
                 />
@@ -340,7 +341,7 @@ const CampusSection: React.FC = () => {
                 }`}
               >
                 <img
-                  src={"/assets/meeting.jpg"}
+                  src={meeting}
                   alt='UIC Campus'
                   className='img-fluid'
                 />
@@ -351,7 +352,7 @@ const CampusSection: React.FC = () => {
                 }`}
               >
                 <img
-                  src={"/assets/homebg1.png"}
+                  src={homebg}
                   alt='UChicago Campus'
                   className='img-fluid'
                 />
@@ -406,105 +407,6 @@ const CampusSection: React.FC = () => {
   );
 };
 
-// HTML for the Contact Form Section //
-const ContactForm: React.FC = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-  const [status, setStatus] = useState<string | null>(null);
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    try {
-      const response: SendMessageResponse = await sendMessage(
-        formData.name,
-        formData.email,
-        formData.message
-      );
-      setStatus(response.message || "Message sent successfully!");
-      setFormData({ name: "", email: "", message: "" });
-    } catch (error) {
-      console.error("Error sending message:", error);
-      setStatus("Failed to send message due to an unknown error");
-    }
-  };
-
-  return (
-    <section id='contact-form' className='container py-5'>
-      <h2 className='text-center mb-4 fw-bolder'>联系我们</h2>
-      <p className='text-center'>
-        如果您有任何问题或需要更多信息，请填写以下表格。
-      </p>
-      <div className='row justify-content-center'>
-        <div className='col-md-8'>
-          <form onSubmit={handleSubmit}>
-            <div className='mb-3'>
-              <label htmlFor='name' className='form-label'>
-                姓名
-              </label>
-              <input
-                type='text'
-                className='form-control'
-                id='name'
-                name='name'
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className='mb-3'>
-              <label htmlFor='email' className='form-label'>
-                电子邮件
-              </label>
-              <input
-                type='email'
-                className='form-control'
-                id='email'
-                name='email'
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className='mb-3'>
-              <label htmlFor='message' className='form-label'>
-                消息
-              </label>
-              <textarea
-                className='form-control'
-                id='message'
-                name='message'
-                rows={4}
-                value={formData.message}
-                onChange={handleChange}
-                required
-              ></textarea>
-            </div>
-            <div className='text-center'>
-              <button type='submit' className='btn btn-primary'>
-                发送消息
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </section>
-  );
-};
-
 // Home Component //
 export default function Home(): JSX.Element {
   useEffect(() => {
@@ -514,7 +416,7 @@ export default function Home(): JSX.Element {
 
       if (topnav && home) {
         const navHeight = topnav.offsetHeight; // Get the height of the navbar
-        home.style.marginTop = `${navHeight + 20}px`; // Set the margin-top of home to the height of navbar
+        home.style.marginTop = `${0}px`; // Set the margin-top of home to the height of navbar
       }
     }, 100);
     return () => clearInterval(interval);

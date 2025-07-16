@@ -57,18 +57,6 @@ const ArticlePage: React.FC = () => {
 };
 
 const ArticleDetails: React.FC = (): JSX.Element => {
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const topnav = document.getElementById("nav-title");
-      const home = document.getElementById("article-page");
-
-      if (topnav && home) {
-        const navHeight = topnav.offsetHeight; // Get the height of the navbar
-        home.style.marginTop = `${navHeight + 20}px`; // Set the margin-top of home to the height of navbar
-      }
-    }, 100);
-    return () => clearInterval(interval);
-  }, []);
 
   return (
     <>
