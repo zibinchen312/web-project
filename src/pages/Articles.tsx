@@ -1,10 +1,10 @@
 import React, { JSX, useState, useEffect } from 'react';
 import "./articles.scss"
 
-import article1img from "../images/article1.jpg";
-import article2img from "../images/article2.jpg";
-import article3img from "../images/article3.jpg";
-import article4img from "../images/article4.jpg";
+import article1img from "../../assets/article1.jpg";
+import article2img from "../../assets/article2.jpg";
+import article3img from "../../assets/article3.jpg";
+import article4img from "../../assets/article4.jpg";
 
 type Article = {
     id: number;
@@ -179,19 +179,6 @@ const ArticlesModal: React.FC = () => {
 };
 
 const Articles: React.FC = (): JSX.Element => {
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            const topnav = document.getElementById("nav-title");
-            const home = document.getElementById("articles-modal");
-    
-            if (topnav && home) {
-                const navHeight = topnav.offsetHeight;  // Get the height of the navbar
-                home.style.marginTop = `${navHeight + 20}px`;    // Set the margin-top of home to the height of navbar
-            }
-        }, 100);
-        return () => clearInterval(interval);
-    }, []);
     
     return (
         <>
